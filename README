@@ -16,7 +16,7 @@ HOW TO INSTALL
 
    - Open the terminal and type the following comands:
    
-     $ git clone https://github.com/clamsawd/ip2e
+     $ git clone https://github.com/clamsawd/ip2e.git
      $ cd ip2e
      # make
      
