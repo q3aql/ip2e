@@ -1,0 +1,35 @@
+ip2e - Receive your public IP (dynamic) by email when it is renewed
+===================================================================
+
+TOOLS
+-----
+
+* ip2e-daemon.py: Daemon to control & send by email your public IP.
+* ip2e-log.py: Tool to see the log file when daemon is running.
+* ip2e-config.py: Tool to create a valid configuration file.
+
+HOW TO INSTALL
+--------------
+
+ * Unix systems (GNU/Linux,*BSD, Mac OS X, etc..)
+ ================================================
+
+   - Open the terminal and type the following comands:
+   
+     $ git clone https://github.com/clamsawd/ip2e
+     $ cd ip2e
+     # make
+     
+   Note: You must install git, curl & sendEmail previously.
+     
+ * Windows
+ =========
+ 
+      - Install Python 3.x from https://www.python.org/.
+      - Download https://github.com/clamsawd/ip2e/archive/master.zip
+      - Unzip the package in your system. For example in C:\Program Files\.
+      - Add the folder to PATH variable.
+      
+      Note: You must install SendEmail & curl.
+      * http://caspian.dotconf.net/menu/Software/SendEmail/sendEmail-v156.zip
+      * http://www.paehl.com/open_source/?CURL_7.45.0
