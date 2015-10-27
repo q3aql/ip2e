@@ -183,7 +183,10 @@ while PublicIP <= 2:
 		os.system("echo [ip2e-daemon] New IP - From "+CurrentIP+" to "+NewIP+" >> ip2e.log")
 		MailMessage="[ip2e-daemon] Email was sent successfully"
 		try:
-			os.system("sendEmail -q -f "+FromEmail+" -t "+ToEmail+" -u '[ip2e-daemon] IP has changed' -m 'ip2e - New IP is '"+NewIP+" -s "+SmtpFromEmail+" -xu "+FromEmailUser+" -xp "+FromEmailPass)
+			if os.name == "posix":
+				os.system("sendEmail -q -f "+FromEmail+" -t "+ToEmail+" -u '[ip2e-daemon] IP has changed' -m '[ip2e] New IP is '"+NewIP+" -s "+SmtpFromEmail+" -xu "+FromEmailUser+" -xp "+FromEmailPass)
+			elif os.name == "nt":
+				os.system("sendEmail -q -f "+FromEmail+" -t "+ToEmail+" -u [ip2e-daemon] IP has changed -m [ip2e] New IP is "+NewIP+" -s "+SmtpFromEmail+" -xu "+FromEmailUser+" -xp "+FromEmailPass)
 		except:
 			MailMessage="[ip2e-daemon] Fail to send email"
 		print (MailMessage+" ("+ToEmail+")")
