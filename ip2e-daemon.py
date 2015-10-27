@@ -10,7 +10,7 @@
 # Dependences: curl, wget, sendEmail, libio-socket-ssl-perl    |
 # Compatible with Python 3.x                                   |
 # --------------------------------------------------------------
-version="0.3-alpha"
+version="0.5-alpha"
 
 #Import python-modules
 import subprocess
@@ -185,15 +185,27 @@ while PublicIP <= 2:
 		print ("[ip2e-daemon] New IP - From "+CurrentIP+" to "+NewIP)
 		os.system("echo [ip2e-daemon] New IP - From "+CurrentIP+" to "+NewIP+" >> ip2e.log")
 		MailMessage="[ip2e-daemon] Email was sent successfully"
-		try:
+		SendEmailOK = 1
+		while SendEmailOK <= 2:
 			if os.name == "posix":
-				os.system("sendEmail -q -f "+FromEmail+" -t "+ToEmail+" -u '[ip2e-daemon] IP has changed' -m '[ip2e] New IP is '"+NewIP+" -s "+SmtpFromEmail+" -xu "+FromEmailUser+" -xp "+FromEmailPass)
+				ErrorSendEmail = os.system("sendEmail -q -f "+FromEmail+" -t "+ToEmail+" -u '[ip2e-daemon] IP has changed' -m '[ip2e] New IP is '"+NewIP+" -s "+SmtpFromEmail+" -xu "+FromEmailUser+" -xp "+FromEmailPass)
 			elif os.name == "nt":
-				os.system("sendEmail -q -f "+FromEmail+" -t "+ToEmail+" -u [ip2e-daemon] IP has changed -m [ip2e] New IP is "+NewIP+" -s "+SmtpFromEmail+" -xu "+FromEmailUser+" -xp "+FromEmailPass)
-		except:
-			MailMessage="[ip2e-daemon] Fail to send email"
-		print (MailMessage+" ("+ToEmail+")")
-		os.system("echo "+MailMessage+" to "+ToEmail+" >> ip2e.log")
+				ErrorSendEmail = os.system("sendEmail -q -f "+FromEmail+" -t "+ToEmail+" -u [ip2e-daemon] IP has changed -m [ip2e] New IP is "+NewIP+" -s "+SmtpFromEmail+" -xu "+FromEmailUser+" -xp "+FromEmailPass)
+			if ErrorSendEmail == 0:
+				MailMessage="[ip2e-daemon] Email was sent successfully"
+				print (MailMessage+" ("+ToEmail+")")
+				os.system("echo "+MailMessage+" to "+ToEmail+" >> ip2e.log")
+				SendEmailOK += 2
+			else:
+				MailMessage="[ip2e-daemon] Fail to send email"
+				print (MailMessage+" ("+ToEmail+")")
+				os.system("echo "+MailMessage+" to "+ToEmail+" >> ip2e.log")
+				print ("[ip2e-daemon] Retrying in 5 seconds...")
+				os.system("echo [ip2e-daemon] Retrying in 5 seconds... >> ip2e.log")
+				if os.name == "posix":
+					os.system("sleep 5")
+				elif os.name == "nt":
+					os.system("ping -n 5 localhost>nul")
 		if os.name == "posix":
 			os.system("rm current-ip.py")
 		elif os.name == "nt":
