@@ -149,9 +149,9 @@ os.system("echo [ip2e-daemon] Initialized ip2e-daemon v"+version+" > ip2e.log")
 print ("[ip2e-daemon] Waiting 60 seconds...")
 os.system("echo [ip2e-daemon] Waiting 60 seconds... >> ip2e.log")
 if os.name == "posix":
-	os.system("sleep 1")
+	os.system("sleep 60")
 elif os.name == "nt":
-	os.system("ping -n 1 localhost>nul")
+	os.system("ping -n 60 localhost>nul")
 
 PublicIP = 1
 
