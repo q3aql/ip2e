@@ -160,9 +160,12 @@ while PublicIP <= 2:
 	while GetCurrentIP <= 2:
 		print ("[ip2e-daemon] IP Updating...")
 		os.system("echo [ip2e-daemon] IP Updating... >> ip2e.log")
-		NewIP = os.popen('curl -s http://ip.appspot.com/').read()
-		#NewIP = os.popen('curl -s ifconfig.me').read()
-		#NewIP = os.popen('wget -qO- icanhazip.com').read()
+		NewIPRaw = os.popen('curl -s icanhazip.com').read()
+		NewIP = NewIPRaw.strip()
+		#NewIP = os.popen('curl -s http://ip.appspot.com/').read()
+		#NewIP = os.popen('curl -s ident.me').read()
+		#NewIPRaw = os.popen('curl -s ifconfig.me').read()
+		#NewIP = NewIPRaw.strip()
 		if NewIP != "":
 			GetCurrentIP += 2
 		else:
