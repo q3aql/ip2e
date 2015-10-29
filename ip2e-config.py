@@ -71,10 +71,7 @@ def writeip2ecf():
 	ip2ecf.write('ToEmail="'+ToEmail+'"\n')
 	ip2ecf.close()
 
-if os.name == "posix":
-	os.system("rm ip2e-conf.py")
-elif os.name == "nt":
-	os.system("del ip2e-conf.py")
+os.remove("ip2e-conf.py")
 createip2ecf()
 writeip2ecf()
 exec(open("ip2e-conf.py").read())

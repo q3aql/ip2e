@@ -239,10 +239,7 @@ while PublicIP <= 2:
 				os.system("echo "+MailMessage+" to "+ToEmail+" >> ip2e.log")
 				os.system("echo [ip2e-daemon] ["+CurrentTime+"] Retrying in 5 seconds... >> ip2e.log")
 				time.sleep(5)
-		if os.name == "posix":
-			os.system("rm current-ip.py")
-		elif os.name == "nt":
-			os.system("del current-ip.py")
+		os.remove("current-ip.py")
 		def createNewip2eIPcf():
 			ip2eIPcf=open('current-ip.py','w')
 			ip2eIPcf.close()
