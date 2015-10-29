@@ -139,16 +139,33 @@ except:
 #Import variables from ip2e-conf.py
 exec(open("ip2e-conf.py").read())
 
+#Import Windows colors scheme
+def GreenColor():
+	os.system("color 2")
+def RedColor():
+	os.system("color 4")
+def OrangeColor():
+	os.system("color 6")
+
 #Run ip2e daemon
 ClearScreen()
 CurrentTime = time.strftime("%H:%M")
-print ("[ip2e-daemon] ["+CurrentTime+"] Initialized ip2e-daemon v"+version+" (Ctrl+C to stop)")
 if os.name == "posix":
-	print ("[ip2e-daemon] ["+CurrentTime+"] Log in "+os.environ["HOME"]+"/.ip2e/ip2e.log")
+	print (chr(27)+"[1;32m"+"[ip2e-daemon] ["+CurrentTime+"] Initialized ip2e-daemon v"+version+" (Ctrl+C to stop)")
 elif os.name == "nt":
+	GreenColor()
+	print ("[ip2e-daemon] ["+CurrentTime+"] Initialized ip2e-daemon v"+version+" (Ctrl+C to stop)")
+if os.name == "posix":
+	print (chr(27)+"[1;32m"+"[ip2e-daemon] ["+CurrentTime+"] Log in "+os.environ["HOME"]+"/.ip2e/ip2e.log")
+elif os.name == "nt":
+	GreenColor()
 	print ("[ip2e-daemon] ["+CurrentTime+"] Log in "+os.environ["USERPROFILE"]+"\.ip2e\\ip2e.log")
 os.system("echo [ip2e-daemon] ["+CurrentTime+"] Initialized ip2e-daemon v"+version+" > ip2e.log")
-print ("[ip2e-daemon] ["+CurrentTime+"] Waiting 60 seconds...")
+if os.name == "posix":
+	print (chr(27)+"[1;33m"+"[ip2e-daemon] ["+CurrentTime+"] Waiting 60 seconds...")
+elif os.name == "nt":
+	OrangeColor()
+	print ("[ip2e-daemon] ["+CurrentTime+"] Waiting 60 seconds...")
 os.system("echo [ip2e-daemon] ["+CurrentTime+"] Waiting 60 seconds... >> ip2e.log")
 if os.name == "posix":
 	os.system("sleep 60")
@@ -161,7 +178,11 @@ while PublicIP <= 2:
 	GetCurrentIP = 1
 	while GetCurrentIP <= 2:
 		CurrentTime = time.strftime("%H:%M")
-		print ("[ip2e-daemon] ["+CurrentTime+"] IP Updating...")
+		if os.name == "posix":
+			print (chr(27)+"[1;33m"+"[ip2e-daemon] ["+CurrentTime+"] IP Updating...")
+		elif os.name == "nt":
+			OrangeColor()
+			print ("[ip2e-daemon] ["+CurrentTime+"] IP Updating...")
 		os.system("echo [ip2e-daemon] ["+CurrentTime+"] IP Updating... >> ip2e.log")
 		NewIPRaw = os.popen('curl -s icanhazip.com').read()
 		NewIP = NewIPRaw.strip()
@@ -173,9 +194,14 @@ while PublicIP <= 2:
 			GetCurrentIP += 2
 		else:
 			CurrentTime = time.strftime("%H:%M")
-			print ("[ip2e-daemon] ["+CurrentTime+"] Error getting IP")
+			if os.name == "posix":
+				print (chr(27)+"[1;31m"+"[ip2e-daemon] ["+CurrentTime+"] Error getting IP")
+				print (chr(27)+"[1;33m"+"[ip2e-daemon] ["+CurrentTime+"] Retrying in 5 seconds...")
+			elif os.name == "nt":
+				RedColor()
+				print ("[ip2e-daemon] ["+CurrentTime+"] Error getting IP")
+				print ("[ip2e-daemon] ["+CurrentTime+"] Retrying in 5 seconds...")
 			os.system("echo [ip2e-daemon] ["+CurrentTime+"] Error getting IP >> ip2e.log")
-			print ("[ip2e-daemon] ["+CurrentTime+"] Retrying in 5 seconds...")
 			os.system("echo [ip2e-daemon] ["+CurrentTime+"] Retrying in 5 seconds... >> ip2e.log")
 			if os.name == "posix":
 				os.system("sleep 5")
@@ -184,11 +210,19 @@ while PublicIP <= 2:
 	exec(open("current-ip.py").read())
 	if CurrentIP == NewIP:
 		CurrentTime = time.strftime("%H:%M")
-		print ("[ip2e-daemon] ["+CurrentTime+"] IP has not changed")
+		if os.name == "posix":
+			print (chr(27)+"[1;32m"+"[ip2e-daemon] ["+CurrentTime+"] IP has not changed")
+		elif os.name == "nt":
+			GreenColor()
+			print ("[ip2e-daemon] ["+CurrentTime+"] IP has not changed")
 		os.system("echo [ip2e-daemon] ["+CurrentTime+"] IP has not changed >> ip2e.log")
 	else:
 		CurrentTime = time.strftime("%H:%M")
-		print ("[ip2e-daemon] ["+CurrentTime+"] New IP - From "+CurrentIP+" to "+NewIP)
+		if os.name == "posix":
+			print (chr(27)+"[1;32m"+"[ip2e-daemon] ["+CurrentTime+"] New IP - From "+CurrentIP+" to "+NewIP)
+		elif os.name == "nt":
+			GreenColor()
+			print ("[ip2e-daemon] ["+CurrentTime+"] New IP - From "+CurrentIP+" to "+NewIP)
 		os.system("echo [ip2e-daemon] ["+CurrentTime+"] New IP - From "+CurrentIP+" to "+NewIP+" >> ip2e.log")
 		SendEmailOK = 1
 		while SendEmailOK <= 2:
@@ -200,15 +234,24 @@ while PublicIP <= 2:
 			if ErrorSendEmail == 0:
 				CurrentTime = time.strftime("%H:%M")
 				MailMessage="[ip2e-daemon] ["+CurrentTime+"] Email was sent successfully"
-				print (MailMessage+" ("+ToEmail+")")
+				if os.name == "posix":
+					print (chr(27)+"[1;32m"+MailMessage+" ("+ToEmail+")")
+				elif os.name == "nt":
+					GreenColor()
+					print (MailMessage+" ("+ToEmail+")")
 				os.system("echo "+MailMessage+" to "+ToEmail+" >> ip2e.log")
 				SendEmailOK += 2
 			else:
 				CurrentTime = time.strftime("%H:%M")
 				MailMessage="[ip2e-daemon] ["+CurrentTime+"] Fail to send email"
-				print (MailMessage+" ("+ToEmail+")")
+				if os.name == "posix":
+					print (chr(27)+"[1;31m"+MailMessage+" ("+ToEmail+")")
+					print (chr(27)+"[1;33m"+"[ip2e-daemon] ["+CurrentTime+"] Retrying in 5 seconds...")
+				elif os.name == "nt":
+					RedColor()
+					print (MailMessage+" ("+ToEmail+")")
+					print ("[ip2e-daemon] ["+CurrentTime+"] Retrying in 5 seconds...")
 				os.system("echo "+MailMessage+" to "+ToEmail+" >> ip2e.log")
-				print ("[ip2e-daemon] ["+CurrentTime+"] Retrying in 5 seconds...")
 				os.system("echo [ip2e-daemon] ["+CurrentTime+"] Retrying in 5 seconds... >> ip2e.log")
 				if os.name == "posix":
 					os.system("sleep 5")
@@ -228,6 +271,10 @@ while PublicIP <= 2:
 		createNewip2eIPcf()
 		writeNewip2eIPcf()
 	CurrentTime = time.strftime("%H:%M")
-	print ("[ip2e-daemon] ["+CurrentTime+"] Next update in 10 minutes...")
+	if os.name == "posix":
+		print (chr(27)+"[1;33m"+"[ip2e-daemon] ["+CurrentTime+"] Next update in 10 minutes...")
+	elif os.name == "nt":
+		GreenColor()
+		print ("[ip2e-daemon] ["+CurrentTime+"] Next update in 10 minutes...")
 	os.system("echo [ip2e-daemon] ["+CurrentTime+"] Next update in 10 minutes... >> ip2e.log")
 	WaitTenMinutes()
