@@ -217,11 +217,23 @@ while PublicIP <= 2:
 			SmtpSubject = "[ip2e-daemon] ["+CurrentTime+"] IP has changed"
 			SmtpHeader = "From: "+FromEmail+"\n"+"To: "+ToEmail+"\n"+"Subject: "+SmtpSubject+"\n"
 			SmtpBodyMessage = SmtpHeader+"\n"+"[ip2e] New IP is "+NewIP+"\n\n"
-			server = smtplib.SMTP(SmtpFromEmail)
-			server.ehlo()
-			server.starttls()
-			server.ehlo()
-			server.login(FromEmailUser,FromEmailPass)
+			try:
+				server = smtplib.SMTP(SmtpFromEmail)
+				server.ehlo()
+				server.starttls()
+				server.ehlo()
+				server.login(FromEmailUser,FromEmailPass)
+			except:
+				if os.name == "posix":
+					print (chr(27)+"[1;31m"+"[ip2e-daemon] ["+CurrentTime+"] Failed to connect ("+SmtpFromEmail+")")
+					print (chr(27)+"[1;31m"+"[ip2e-daemon] ["+CurrentTime+"] Check your settings [Aborted]")
+				elif os.name == "nt":
+					RedColor()
+					print ("[ip2e-daemon] ["+CurrentTime+"] Failed to connect ("+SmtpFromEmail+")")
+					print ("[ip2e-daemon] ["+CurrentTime+"] Check your settings [Aborted]")
+				editlog.write("[ip2e-daemon] ["+CurrentTime+"] Failed to connect ("+SmtpFromEmail+")\n")
+				editlog.write("[ip2e-daemon] ["+CurrentTime+"] Check your settings [Aborted]\n")
+				exit(1)
 			#Check sending errors
 			try:
 				server.sendmail(FromEmail, ToEmail, SmtpBodyMessage)
