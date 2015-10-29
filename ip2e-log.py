@@ -5,12 +5,12 @@
 # ip2e (IP to email) - See the log file.                       |
 # Created by clamsawd (clamsawd@openmailbox.org)               |
 # Licensed by GPL v.3                                          |
-# Last update: 27-10-2015                                      |
+# Last update: 29-10-2015                                      |
 #                                                              |
 # Dependences: curl, wget, sendEmail, libio-socket-ssl-perl    |
 # Compatible with Python 3.x                                   |
 # --------------------------------------------------------------
-version="0.5-alpha"
+version="0.6-alpha"
 
 #Import python-modules
 import os

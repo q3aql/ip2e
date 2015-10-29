@@ -5,17 +5,18 @@
 # ip2e (IP to email) - Run ip2e daemon.                        |
 # Created by clamsawd (clamsawd@openmailbox.org)               |
 # Licensed by GPL v.3                                          |
-# Last update: 27-10-2015                                      |
+# Last update: 29-10-2015                                      |
 #                                                              |
 # Dependences: curl, wget, sendEmail, libio-socket-ssl-perl    |
 # Compatible with Python 3.x                                   |
 # --------------------------------------------------------------
-version="0.5-alpha"
+version="0.6-alpha"
 
 #Import python-modules
 import subprocess
 import os
 import sys
+import time
 
 #Check if your system use Python 3.x
 if sys.version_info<(3,0):
@@ -140,14 +141,15 @@ exec(open("ip2e-conf.py").read())
 
 #Run ip2e daemon
 ClearScreen()
-print ("[ip2e-daemon] Initialized ip2e-daemon v"+version+" (Ctrl+C to stop)")
+CurrentTime = time.strftime("%H:%M")
+print ("[ip2e-daemon] ["+CurrentTime+"] Initialized ip2e-daemon v"+version+" (Ctrl+C to stop)")
 if os.name == "posix":
-	print ("[ip2e-daemon] Log in "+os.environ["HOME"]+"/.ip2e/ip2e.log")
+	print ("[ip2e-daemon] ["+CurrentTime+"] Log in "+os.environ["HOME"]+"/.ip2e/ip2e.log")
 elif os.name == "nt":
-	print ("[ip2e-daemon] Log in "+os.environ["USERPROFILE"]+"\.ip2e\\ip2e.log")
-os.system("echo [ip2e-daemon] Initialized ip2e-daemon v"+version+" > ip2e.log")
-print ("[ip2e-daemon] Waiting 60 seconds...")
-os.system("echo [ip2e-daemon] Waiting 60 seconds... >> ip2e.log")
+	print ("[ip2e-daemon] ["+CurrentTime+"] Log in "+os.environ["USERPROFILE"]+"\.ip2e\\ip2e.log")
+os.system("echo [ip2e-daemon] ["+CurrentTime+"] Initialized ip2e-daemon v"+version+" > ip2e.log")
+print ("[ip2e-daemon] ["+CurrentTime+"] Waiting 60 seconds...")
+os.system("echo [ip2e-daemon] ["+CurrentTime+"] Waiting 60 seconds... >> ip2e.log")
 if os.name == "posix":
 	os.system("sleep 60")
 elif os.name == "nt":
@@ -158,8 +160,9 @@ PublicIP = 1
 while PublicIP <= 2:
 	GetCurrentIP = 1
 	while GetCurrentIP <= 2:
-		print ("[ip2e-daemon] IP Updating...")
-		os.system("echo [ip2e-daemon] IP Updating... >> ip2e.log")
+		CurrentTime = time.strftime("%H:%M")
+		print ("[ip2e-daemon] ["+CurrentTime+"] IP Updating...")
+		os.system("echo [ip2e-daemon] ["+CurrentTime+"] IP Updating... >> ip2e.log")
 		NewIPRaw = os.popen('curl -s icanhazip.com').read()
 		NewIP = NewIPRaw.strip()
 		#NewIP = os.popen('curl -s http://ip.appspot.com/').read()
@@ -169,39 +172,44 @@ while PublicIP <= 2:
 		if NewIP != "":
 			GetCurrentIP += 2
 		else:
-			print ("[ip2e-daemon] Error getting IP")
-			os.system("echo [ip2e-daemon] Error getting IP >> ip2e.log")
-			print ("[ip2e-daemon] Retrying in 5 seconds...")
-			os.system("echo [ip2e-daemon] Retrying in 5 seconds... >> ip2e.log")
+			CurrentTime = time.strftime("%H:%M")
+			print ("[ip2e-daemon] ["+CurrentTime+"] Error getting IP")
+			os.system("echo [ip2e-daemon] ["+CurrentTime+"] Error getting IP >> ip2e.log")
+			print ("[ip2e-daemon] ["+CurrentTime+"] Retrying in 5 seconds...")
+			os.system("echo [ip2e-daemon] ["+CurrentTime+"] Retrying in 5 seconds... >> ip2e.log")
 			if os.name == "posix":
 				os.system("sleep 5")
 			elif os.name == "nt":
 				os.system("ping -n 5 localhost>nul")
 	exec(open("current-ip.py").read())
 	if CurrentIP == NewIP:
-		print ("[ip2e-daemon] IP has not changed")
-		os.system("echo [ip2e-daemon] IP has not changed >> ip2e.log")
+		CurrentTime = time.strftime("%H:%M")
+		print ("[ip2e-daemon] ["+CurrentTime+"] IP has not changed")
+		os.system("echo [ip2e-daemon] ["+CurrentTime+"] IP has not changed >> ip2e.log")
 	else:
-		print ("[ip2e-daemon] New IP - From "+CurrentIP+" to "+NewIP)
-		os.system("echo [ip2e-daemon] New IP - From "+CurrentIP+" to "+NewIP+" >> ip2e.log")
-		MailMessage="[ip2e-daemon] Email was sent successfully"
+		CurrentTime = time.strftime("%H:%M")
+		print ("[ip2e-daemon] ["+CurrentTime+"] New IP - From "+CurrentIP+" to "+NewIP)
+		os.system("echo [ip2e-daemon] ["+CurrentTime+"] New IP - From "+CurrentIP+" to "+NewIP+" >> ip2e.log")
 		SendEmailOK = 1
 		while SendEmailOK <= 2:
+			CurrentTime = time.strftime("%H:%M")
 			if os.name == "posix":
-				ErrorSendEmail = os.system("sendEmail -q -f "+FromEmail+" -t "+ToEmail+" -u '[ip2e-daemon] IP has changed' -m '[ip2e] New IP is '"+NewIP+" -s "+SmtpFromEmail+" -xu "+FromEmailUser+" -xp "+FromEmailPass)
+				ErrorSendEmail = os.system("sendEmail -q -f "+FromEmail+" -t "+ToEmail+" -u '[ip2e-daemon] ["+CurrentTime+"] IP has changed' -m '[ip2e] New IP is '"+NewIP+" -s "+SmtpFromEmail+" -xu "+FromEmailUser+" -xp "+FromEmailPass)
 			elif os.name == "nt":
-				ErrorSendEmail = os.system("sendEmail -q -f "+FromEmail+" -t "+ToEmail+" -u [ip2e-daemon] IP has changed -m [ip2e] New IP is "+NewIP+" -s "+SmtpFromEmail+" -xu "+FromEmailUser+" -xp "+FromEmailPass)
+				ErrorSendEmail = os.system("sendEmail -q -f "+FromEmail+" -t "+ToEmail+" -u [ip2e-daemon] ["+CurrentTime+"] IP has changed -m [ip2e] New IP is "+NewIP+" -s "+SmtpFromEmail+" -xu "+FromEmailUser+" -xp "+FromEmailPass)
 			if ErrorSendEmail == 0:
-				MailMessage="[ip2e-daemon] Email was sent successfully"
+				CurrentTime = time.strftime("%H:%M")
+				MailMessage="[ip2e-daemon] ["+CurrentTime+"] Email was sent successfully"
 				print (MailMessage+" ("+ToEmail+")")
 				os.system("echo "+MailMessage+" to "+ToEmail+" >> ip2e.log")
 				SendEmailOK += 2
 			else:
-				MailMessage="[ip2e-daemon] Fail to send email"
+				CurrentTime = time.strftime("%H:%M")
+				MailMessage="[ip2e-daemon] ["+CurrentTime+"] Fail to send email"
 				print (MailMessage+" ("+ToEmail+")")
 				os.system("echo "+MailMessage+" to "+ToEmail+" >> ip2e.log")
-				print ("[ip2e-daemon] Retrying in 5 seconds...")
-				os.system("echo [ip2e-daemon] Retrying in 5 seconds... >> ip2e.log")
+				print ("[ip2e-daemon] ["+CurrentTime+"] Retrying in 5 seconds...")
+				os.system("echo [ip2e-daemon] ["+CurrentTime+"] Retrying in 5 seconds... >> ip2e.log")
 				if os.name == "posix":
 					os.system("sleep 5")
 				elif os.name == "nt":
@@ -219,6 +227,7 @@ while PublicIP <= 2:
 			ip2eIPcf.close()
 		createNewip2eIPcf()
 		writeNewip2eIPcf()
-	print ("[ip2e-daemon] Next update in 10 minutes...")
-	os.system("echo [ip2e-daemon] Next update in 10 minutes... >> ip2e.log")
+	CurrentTime = time.strftime("%H:%M")
+	print ("[ip2e-daemon] ["+CurrentTime+"] Next update in 10 minutes...")
+	os.system("echo [ip2e-daemon] ["+CurrentTime+"] Next update in 10 minutes... >> ip2e.log")
 	WaitTenMinutes()
