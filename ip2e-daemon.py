@@ -7,7 +7,7 @@
 # Licensed by GPL v.3                                          |
 # Last update: 29-10-2015                                      |
 #                                                              |
-# Dependences: curl, wget, sendEmail, libio-socket-ssl-perl    |
+# Dependences: curl or wget                                    |
 # Compatible with Python 3.x                                   |
 # --------------------------------------------------------------
 version="0.7-beta"
@@ -86,22 +86,6 @@ else:
 	print ("current-ip.py created")
 	createip2eIPcf()
 	writeip2eIPcf()
-
-#Check if sendEmail is installed
-from subprocess import PIPE, Popen
-try:
-	sendEmailCheck = Popen(['sendEmail', '-q'], stdout=PIPE, stderr=PIPE)
-	sendEmailCheck.stderr.close()
-except:
-	ClearScreen()
-	print ("")
-	print ("Error: 'sendEmail' is not installed!")
-	print ("")
-	print ("Help:")
-	print ("  * http://caspian.dotconf.net/menu/Software/SendEmail/")
-	print ("")
-	PauseExit=input("Press ENTER to exit ")
-	exit(1)
 
 #Check if curl is installed
 try:

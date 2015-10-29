@@ -7,7 +7,7 @@
 # Licensed by GPL v.3                                          |
 # Last update: 29-10-2015                                      |
 #                                                              |
-# Dependences: curl, wget, sendEmail, libio-socket-ssl-perl    |
+# Dependences: curl or wget                                    |
 # Compatible with Python 3.x                                   |
 # --------------------------------------------------------------
 version="0.7-beta"
