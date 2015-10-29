@@ -10,7 +10,7 @@
 # Dependences: curl, wget, sendEmail, libio-socket-ssl-perl    |
 # Compatible with Python 3.x                                   |
 # --------------------------------------------------------------
-version="0.6-alpha"
+version="0.7-beta"
 
 #Import python-modules
 import os

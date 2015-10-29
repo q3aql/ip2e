@@ -10,7 +10,7 @@
 # Dependences: curl, wget, sendEmail, libio-socket-ssl-perl    |
 # Compatible with Python 3.x                                   |
 # --------------------------------------------------------------
-version="0.6-alpha"
+version="0.7-beta"
 
 #Import python-modules
 import subprocess
@@ -129,8 +129,15 @@ def RedColor():
 def OrangeColor():
 	os.system("color 6")
 
+#Check if exists a previous log.file.
+if os.path.isfile("ip2e.log"):
+	os.remove("ip2e.log")
+createlog=open('ip2e.log','w')
+createlog.close()
+
 #Run ip2e daemon
 ClearScreen()
+editlog=open('ip2e.log','a')
 CurrentTime = time.strftime("%H:%M")
 if os.name == "posix":
 	print (chr(27)+"[1;32m"+"[ip2e-daemon] ["+CurrentTime+"] Initialized ip2e-daemon v"+version+" (Ctrl+C to stop)")
@@ -142,13 +149,14 @@ if os.name == "posix":
 elif os.name == "nt":
 	GreenColor()
 	print ("[ip2e-daemon] ["+CurrentTime+"] Log in "+os.environ["USERPROFILE"]+"\.ip2e\\ip2e.log")
-os.system("echo [ip2e-daemon] ["+CurrentTime+"] Initialized ip2e-daemon v"+version+" > ip2e.log")
+editlog.write("[ip2e-daemon] ["+CurrentTime+"] Initialized ip2e-daemon v"+version+"\n")
 if os.name == "posix":
 	print (chr(27)+"[1;33m"+"[ip2e-daemon] ["+CurrentTime+"] Waiting 60 seconds...")
 elif os.name == "nt":
 	OrangeColor()
 	print ("[ip2e-daemon] ["+CurrentTime+"] Waiting 60 seconds...")
-os.system("echo [ip2e-daemon] ["+CurrentTime+"] Waiting 60 seconds... >> ip2e.log")
+editlog.write("[ip2e-daemon] ["+CurrentTime+"] Waiting 60 seconds...\n")
+editlog.close()
 time.sleep(60)
 
 PublicIP = 1
@@ -162,7 +170,8 @@ while PublicIP <= 2:
 		elif os.name == "nt":
 			OrangeColor()
 			print ("[ip2e-daemon] ["+CurrentTime+"] IP Updating...")
-		os.system("echo [ip2e-daemon] ["+CurrentTime+"] IP Updating... >> ip2e.log")
+		editlog=open('ip2e.log','a')
+		editlog.write("[ip2e-daemon] ["+CurrentTime+"] IP Updating...\n")
 		NewIPRaw = os.popen('curl -s icanhazip.com').read()
 		NewIP = NewIPRaw.strip()
 		#NewIP = os.popen('curl -s http://ip.appspot.com/').read()
@@ -180,8 +189,8 @@ while PublicIP <= 2:
 				RedColor()
 				print ("[ip2e-daemon] ["+CurrentTime+"] Error getting IP")
 				print ("[ip2e-daemon] ["+CurrentTime+"] Retrying in 5 seconds...")
-			os.system("echo [ip2e-daemon] ["+CurrentTime+"] Error getting IP >> ip2e.log")
-			os.system("echo [ip2e-daemon] ["+CurrentTime+"] Retrying in 5 seconds... >> ip2e.log")
+			editlog.write("[ip2e-daemon] ["+CurrentTime+"] Error getting IP\n")
+			editlog.write("[ip2e-daemon] ["+CurrentTime+"] Retrying in 5 seconds...\n")
 			time.sleep(5)
 	exec(open("current-ip.py").read())
 	if CurrentIP == NewIP:
@@ -191,7 +200,7 @@ while PublicIP <= 2:
 		elif os.name == "nt":
 			GreenColor()
 			print ("[ip2e-daemon] ["+CurrentTime+"] IP has not changed")
-		os.system("echo [ip2e-daemon] ["+CurrentTime+"] IP has not changed >> ip2e.log")
+		editlog.write("[ip2e-daemon] ["+CurrentTime+"] IP has not changed\n")
 	else:
 		CurrentTime = time.strftime("%H:%M")
 		if os.name == "posix":
@@ -199,7 +208,7 @@ while PublicIP <= 2:
 		elif os.name == "nt":
 			GreenColor()
 			print ("[ip2e-daemon] ["+CurrentTime+"] New IP - From "+CurrentIP+" to "+NewIP)
-		os.system("echo [ip2e-daemon] ["+CurrentTime+"] New IP - From "+CurrentIP+" to "+NewIP+" >> ip2e.log")
+		editlog.write("[ip2e-daemon] ["+CurrentTime+"] New IP - From "+CurrentIP+" to "+NewIP+"\n")
 		SendEmailOK = 1
 		while SendEmailOK <= 2:
 			CurrentTime = time.strftime("%H:%M")
@@ -215,7 +224,7 @@ while PublicIP <= 2:
 				elif os.name == "nt":
 					GreenColor()
 					print (MailMessage+" ("+ToEmail+")")
-				os.system("echo "+MailMessage+" to "+ToEmail+" >> ip2e.log")
+				editlog.write(MailMessage+" to "+ToEmail+"\n")
 				SendEmailOK += 2
 			else:
 				CurrentTime = time.strftime("%H:%M")
@@ -227,8 +236,8 @@ while PublicIP <= 2:
 					RedColor()
 					print (MailMessage+" ("+ToEmail+")")
 					print ("[ip2e-daemon] ["+CurrentTime+"] Retrying in 5 seconds...")
-				os.system("echo "+MailMessage+" to "+ToEmail+" >> ip2e.log")
-				os.system("echo [ip2e-daemon] ["+CurrentTime+"] Retrying in 5 seconds... >> ip2e.log")
+				editlog.write(MailMessage+" to "+ToEmail+"\n")
+				editlog.write("[ip2e-daemon] ["+CurrentTime+"] Retrying in 5 seconds...\n")
 				time.sleep(5)
 		os.remove("current-ip.py")
 		def createNewip2eIPcf():
@@ -246,5 +255,6 @@ while PublicIP <= 2:
 	elif os.name == "nt":
 		GreenColor()
 		print ("[ip2e-daemon] ["+CurrentTime+"] Next update in 10 minutes...")
-	os.system("echo [ip2e-daemon] ["+CurrentTime+"] Next update in 10 minutes... >> ip2e.log")
+	editlog.write("[ip2e-daemon] ["+CurrentTime+"] Next update in 10 minutes...\n")
+	editlog.close()
 	time.sleep(600)
