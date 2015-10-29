@@ -20,7 +20,7 @@ HOW TO INSTALL
      $ cd ip2e
      # make
      
-   Note: You must install git, curl & sendEmail previously.
+   Note: You must install git & curl previously.
      
  * Windows
  =========
@@ -30,6 +30,6 @@ HOW TO INSTALL
       - Unzip the package in your system. For example in C:\Program Files\.
       - Add the folder to PATH variable.
       
-      Note: You must install SendEmail & curl.
-      * http://caspian.dotconf.net/menu/Software/SendEmail/sendEmail-v156.zip
+      Note: You must install curl.
+      * http://curl.haxx.se/download.html
       * http://www.paehl.com/open_source/?CURL_7.45.0
