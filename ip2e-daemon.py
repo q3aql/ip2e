@@ -33,13 +33,6 @@ def ClearScreen():
 		os.system("cls")
 	else:
 		print ("Error: Unable clear screen")
-
-#Function to pause screen
-def PauseScreen():
-	if os.name == "posix":
-		os.system("read pause")
-	elif os.name == "nt":
-		os.system("pause > nul")
 					
 #Detect system & PATH of user folder
 if os.name == "posix":
@@ -106,8 +99,7 @@ except:
 	print ("Help:")
 	print ("  * http://caspian.dotconf.net/menu/Software/SendEmail/")
 	print ("")
-	print ("Press ENTER to exit")
-	PauseScreen()
+	PauseExit=input("Press ENTER to exit ")
 	exit(1)
 
 #Check if curl is installed
@@ -123,8 +115,7 @@ except:
 	print ("  * http://curl.haxx.se/download.html")
 	print ("  * http://www.paehl.com/open_source/?CURL_7.45.0")
 	print ("")
-	print ("Press ENTER to exit")
-	PauseScreen()
+	PauseExit=input("Press ENTER to exit ")
 	exit(1)
 
 #Import variables from ip2e-conf.py
