@@ -10,7 +10,7 @@
 # Dependences: curl or wget                                    |
 # Compatible with Python 3.x                                   |
 # --------------------------------------------------------------
-version="0.7-beta"
+version="0.8-beta"
 
 #Import python-modules
 import os
