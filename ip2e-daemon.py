@@ -17,6 +17,7 @@ import subprocess
 import os
 import sys
 import time
+import smtplib
 
 #Check if your system use Python 3.x
 if sys.version_info<(3,0):
@@ -212,11 +213,19 @@ while PublicIP <= 2:
 		SendEmailOK = 1
 		while SendEmailOK <= 2:
 			CurrentTime = time.strftime("%H:%M")
-			if os.name == "posix":
-				ErrorSendEmail = os.system("sendEmail -q -f "+FromEmail+" -t "+ToEmail+" -u '[ip2e-daemon] ["+CurrentTime+"] IP has changed' -m '[ip2e] New IP is '"+NewIP+" -s "+SmtpFromEmail+" -xu "+FromEmailUser+" -xp "+FromEmailPass)
-			elif os.name == "nt":
-				ErrorSendEmail = os.system("sendEmail -q -f "+FromEmail+" -t "+ToEmail+" -u [ip2e-daemon] ["+CurrentTime+"] IP has changed -m [ip2e] New IP is "+NewIP+" -s "+SmtpFromEmail+" -xu "+FromEmailUser+" -xp "+FromEmailPass)
-			if ErrorSendEmail == 0:
+			#Sending email using smtplib
+			SmtpSubject = "[ip2e-daemon] ["+CurrentTime+"] IP has changed"
+			SmtpHeader = "From: """+FromEmail+"\n"+"To: "+ToEmail+"\n"+"Subject: "+SmtpSubject+"\n"
+			SmtpBodyMessage = SmtpHeader+"\n"+"[ip2e] New IP is "+NewIP+"\n\n"
+			server = smtplib.SMTP(SmtpFromEmail)
+			server.ehlo()
+			server.starttls()
+			server.ehlo()
+			server.login(FromEmailUser,FromEmailPass)
+			#Check sending errors
+			try:
+				server.sendmail(FromEmail, ToEmail, SmtpBodyMessage)
+				server.quit()
 				CurrentTime = time.strftime("%H:%M")
 				MailMessage="[ip2e-daemon] ["+CurrentTime+"] Email was sent successfully"
 				if os.name == "posix":
@@ -226,7 +235,7 @@ while PublicIP <= 2:
 					print (MailMessage+" ("+ToEmail+")")
 				editlog.write(MailMessage+" to "+ToEmail+"\n")
 				SendEmailOK += 2
-			else:
+			except SMTPException:
 				CurrentTime = time.strftime("%H:%M")
 				MailMessage="[ip2e-daemon] ["+CurrentTime+"] Fail to send email"
 				if os.name == "posix":
