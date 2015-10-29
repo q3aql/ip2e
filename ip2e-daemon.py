@@ -215,7 +215,7 @@ while PublicIP <= 2:
 			CurrentTime = time.strftime("%H:%M")
 			#Sending email using smtplib
 			SmtpSubject = "[ip2e-daemon] ["+CurrentTime+"] IP has changed"
-			SmtpHeader = "From: """+FromEmail+"\n"+"To: "+ToEmail+"\n"+"Subject: "+SmtpSubject+"\n"
+			SmtpHeader = "From: "+FromEmail+"\n"+"To: "+ToEmail+"\n"+"Subject: "+SmtpSubject+"\n"
 			SmtpBodyMessage = SmtpHeader+"\n"+"[ip2e] New IP is "+NewIP+"\n\n"
 			server = smtplib.SMTP(SmtpFromEmail)
 			server.ehlo()
