@@ -72,10 +72,9 @@ else:
 if os.path.isfile("ip2e.log"):
 	print ("ip2e.log exists")
 	ClearScreen()
-	if os.name == "posix":
-		os.system("cat ip2e.log")
-	elif os.name == "nt":
-		os.system("type ip2e.log")
+	readfile=open('ip2e.log', 'r')
+	print(readfile.read())
+	readfile.close()
 else:
 	ClearScreen()
 	print ("")

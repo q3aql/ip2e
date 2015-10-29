@@ -74,15 +74,12 @@ def writeip2ecf():
 os.remove("ip2e-conf.py")
 createip2ecf()
 writeip2ecf()
-exec(open("ip2e-conf.py").read())
 
 #Show the configuration
 ClearScreen()
 print ("")
 print ("ip2e-config v"+version+" - Current config.file")
 print ("")
-if os.name == "posix":
-	os.system("cat ip2e-conf.py")
-elif os.name == "nt":
-	os.system("type ip2e-conf.py")
-print ("")
+readfile=open('ip2e-conf.py', 'r')
+print(readfile.read())
+readfile.close()
