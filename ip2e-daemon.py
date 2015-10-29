@@ -40,16 +40,7 @@ def PauseScreen():
 		os.system("read pause")
 	elif os.name == "nt":
 		os.system("pause > nul")
-				
-#Function to wait ten minutes
-def WaitTenMinutes():
-	if os.name == "posix":
-		os.system("sleep 600")
-	elif os.name == "nt":
-		os.system("ping -n 600 localhost>nul")
-	else:
-		print ("Error waiting 10 minutes")
-		
+					
 #Detect system & PATH of user folder
 if os.name == "posix":
 	os.chdir(os.environ["HOME"])
@@ -167,10 +158,7 @@ elif os.name == "nt":
 	OrangeColor()
 	print ("[ip2e-daemon] ["+CurrentTime+"] Waiting 60 seconds...")
 os.system("echo [ip2e-daemon] ["+CurrentTime+"] Waiting 60 seconds... >> ip2e.log")
-if os.name == "posix":
-	os.system("sleep 60")
-elif os.name == "nt":
-	os.system("ping -n 60 localhost>nul")
+time.sleep(60)
 
 PublicIP = 1
 
@@ -203,10 +191,7 @@ while PublicIP <= 2:
 				print ("[ip2e-daemon] ["+CurrentTime+"] Retrying in 5 seconds...")
 			os.system("echo [ip2e-daemon] ["+CurrentTime+"] Error getting IP >> ip2e.log")
 			os.system("echo [ip2e-daemon] ["+CurrentTime+"] Retrying in 5 seconds... >> ip2e.log")
-			if os.name == "posix":
-				os.system("sleep 5")
-			elif os.name == "nt":
-				os.system("ping -n 5 localhost>nul")
+			time.sleep(5)
 	exec(open("current-ip.py").read())
 	if CurrentIP == NewIP:
 		CurrentTime = time.strftime("%H:%M")
@@ -253,10 +238,7 @@ while PublicIP <= 2:
 					print ("[ip2e-daemon] ["+CurrentTime+"] Retrying in 5 seconds...")
 				os.system("echo "+MailMessage+" to "+ToEmail+" >> ip2e.log")
 				os.system("echo [ip2e-daemon] ["+CurrentTime+"] Retrying in 5 seconds... >> ip2e.log")
-				if os.name == "posix":
-					os.system("sleep 5")
-				elif os.name == "nt":
-					os.system("ping -n 5 localhost>nul")
+				time.sleep(5)
 		if os.name == "posix":
 			os.system("rm current-ip.py")
 		elif os.name == "nt":
@@ -277,4 +259,4 @@ while PublicIP <= 2:
 		GreenColor()
 		print ("[ip2e-daemon] ["+CurrentTime+"] Next update in 10 minutes...")
 	os.system("echo [ip2e-daemon] ["+CurrentTime+"] Next update in 10 minutes... >> ip2e.log")
-	WaitTenMinutes()
+	time.sleep(600)
