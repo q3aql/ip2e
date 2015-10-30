@@ -172,10 +172,10 @@ while PublicIP <= 2:
 			CurrentTime = time.strftime("%H:%M")
 			RedColor()
 			print ("[ip2e-daemon] ["+CurrentTime+"] Error getting IP")
-			print ("[ip2e-daemon] ["+CurrentTime+"] Retrying in 5 seconds...")
+			print ("[ip2e-daemon] ["+CurrentTime+"] Retrying in 10 seconds...")
 			editlog.write("[ip2e-daemon] ["+CurrentTime+"] Error getting IP\n")
-			editlog.write("[ip2e-daemon] ["+CurrentTime+"] Retrying in 5 seconds...\n")
-			time.sleep(5)
+			editlog.write("[ip2e-daemon] ["+CurrentTime+"] Retrying in 10 seconds...\n")
+			time.sleep(10)
 	exec(open("current-ip.py").read())
 	if CurrentIP == NewIP:
 		CurrentTime = time.strftime("%H:%M")
@@ -194,38 +194,34 @@ while PublicIP <= 2:
 			SmtpSubject = "[ip2e-daemon] ["+CurrentTime+"] IP has changed"
 			SmtpHeader = "From: "+FromEmail+"\n"+"To: "+ToEmail+"\n"+"Subject: "+SmtpSubject+"\n"
 			SmtpBodyMessage = SmtpHeader+"\n"+"[ip2e] New IP is "+NewIP+"\n\n"
+			#Check sending errors
 			try:
 				server = smtplib.SMTP(SmtpFromEmail)
 				server.ehlo()
 				server.starttls()
 				server.ehlo()
 				server.login(FromEmailUser,FromEmailPass)
-			except:
-				RedColor()
-				print ("[ip2e-daemon] ["+CurrentTime+"] Failed to connect ("+SmtpFromEmail+")")
-				print ("[ip2e-daemon] ["+CurrentTime+"] Check your settings [Aborted]")
-				editlog.write("[ip2e-daemon] ["+CurrentTime+"] Failed to connect ("+SmtpFromEmail+")\n")
-				editlog.write("[ip2e-daemon] ["+CurrentTime+"] Check your settings [Aborted]\n")
-				exit(1)
-			#Check sending errors
-			try:
 				server.sendmail(FromEmail, ToEmail, SmtpBodyMessage)
 				server.quit()
 				CurrentTime = time.strftime("%H:%M")
 				MailMessage="[ip2e-daemon] ["+CurrentTime+"] Email was sent successfully"
 				GreenColor()
 				print (MailMessage+" ("+ToEmail+")")
-				editlog.write(MailMessage+" to "+ToEmail+"\n")
+				editlog.write(MailMessage+" ("+ToEmail+")\n")
 				SendEmailOK += 2
-			except SMTPException:
+			except:
 				CurrentTime = time.strftime("%H:%M")
-				MailMessage="[ip2e-daemon] ["+CurrentTime+"] Fail to send email"
 				RedColor()
+				print ("[ip2e-daemon] ["+CurrentTime+"] Failed to connect ("+SmtpFromEmail+")")
+				print ("[ip2e-daemon] ["+CurrentTime+"] Check your settings or your connection")
+				editlog.write("[ip2e-daemon] ["+CurrentTime+"] Failed to connect ("+SmtpFromEmail+")\n")
+				editlog.write("[ip2e-daemon] ["+CurrentTime+"] Check your settings or your connection\n")
+				MailMessage="[ip2e-daemon] ["+CurrentTime+"] Failed to send email"
 				print (MailMessage+" ("+ToEmail+")")
-				print ("[ip2e-daemon] ["+CurrentTime+"] Retrying in 5 seconds...")
-				editlog.write(MailMessage+" to "+ToEmail+"\n")
-				editlog.write("[ip2e-daemon] ["+CurrentTime+"] Retrying in 5 seconds...\n")
-				time.sleep(5)
+				print ("[ip2e-daemon] ["+CurrentTime+"] Retrying in 10 seconds...")
+				editlog.write(MailMessage+" ("+ToEmail+")\n")
+				editlog.write("[ip2e-daemon] ["+CurrentTime+"] Retrying in 10 seconds...\n")
+				time.sleep(10)
 		os.remove("current-ip.py")
 		def createNewip2eIPcf():
 			ip2eIPcf=open('current-ip.py','w')
