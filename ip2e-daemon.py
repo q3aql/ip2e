@@ -18,6 +18,8 @@ import os
 import sys
 import time
 import smtplib
+import urllib
+import urllib.request
 
 #Check if your system use Python 3.x
 if sys.version_info<(3,0):
@@ -160,15 +162,14 @@ while PublicIP <= 2:
 		print ("[ip2e-daemon] ["+CurrentTime+"] IP Updating...")
 		editlog=open('ip2e.log','a')
 		editlog.write("[ip2e-daemon] ["+CurrentTime+"] IP Updating...\n")
-		NewIPRaw = os.popen('curl -s icanhazip.com').read()
-		NewIP = NewIPRaw.strip()
-		#NewIP = os.popen('curl -s http://ip.appspot.com/').read()
-		#NewIP = os.popen('curl -s ident.me').read()
-		#NewIPRaw = os.popen('curl -s ifconfig.me').read()
-		#NewIP = NewIPRaw.strip()
-		if NewIP != "":
+		try:
+			response = urllib.request.urlopen('http://icanhazip.com')
+			#response = urllib.request.urlopen('http://ip.appspot.com/')
+			#response = urllib.request.urlopen('http://ident.me')
+			NewIPRaw = response.read()
+			NewIP = NewIPRaw.strip().decode('utf-8')
 			GetCurrentIP += 2
-		else:
+		except:
 			CurrentTime = time.strftime("%H:%M")
 			RedColor()
 			print ("[ip2e-daemon] ["+CurrentTime+"] Error getting IP")
