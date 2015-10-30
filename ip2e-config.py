@@ -7,7 +7,6 @@
 # Licensed by GPL v.3                                          |
 # Last update: 30-10-2015                                      |
 #                                                              |
-# Dependences: curl or wget                                    |
 # Compatible with Python 3.x                                   |
 # --------------------------------------------------------------
 version="0.8-beta"

@@ -7,19 +7,17 @@
 # Licensed by GPL v.3                                          |
 # Last update: 30-10-2015                                      |
 #                                                              |
-# Dependences: curl or wget                                    |
 # Compatible with Python 3.x                                   |
 # --------------------------------------------------------------
 version="0.8-beta"
 
 #Import python-modules
-import subprocess
+import urllib
+import urllib.request
 import os
 import sys
 import time
 import smtplib
-import urllib
-import urllib.request
 
 #Check if your system use Python 3.x
 if sys.version_info<(3,0):
@@ -88,23 +86,6 @@ else:
 	print ("current-ip.py created")
 	createip2eIPcf()
 	writeip2eIPcf()
-
-#Check if curl is installed
-from subprocess import PIPE, Popen
-try:
-	curlCheck = Popen(['curl', '--version'], stdout=PIPE, stderr=PIPE)
-	curlCheck.stderr.close()
-except:
-	ClearScreen()
-	print ("")
-	print ("Error: 'curl' is not installed!")
-	print ("")
-	print ("Help:")
-	print ("  * http://curl.haxx.se/download.html")
-	print ("  * http://www.paehl.com/open_source/?CURL_7.45.0")
-	print ("")
-	PauseExit=input("Press ENTER to exit ")
-	exit(1)
 
 #Import variables from ip2e-conf.py
 exec(open("ip2e-conf.py").read())
