@@ -5,7 +5,7 @@
 # ip2e (IP to email) - See the log file.                       |
 # Created by clamsawd (clamsawd@openmailbox.org)               |
 # Licensed by GPL v.3                                          |
-# Last update: 29-10-2015                                      |
+# Last update: 30-10-2015                                      |
 #                                                              |
 # Dependences: curl or wget                                    |
 # Compatible with Python 3.x                                   |
