@@ -20,16 +20,12 @@ HOW TO INSTALL
      $ cd ip2e
      # make
      
-   Note: You must install git & curl previously.
+   Note: You must install git & python3 previously.
      
  * Windows
  =========
  
-      - Install Python 3.x from https://www.python.org/.
-      - Download https://github.com/clamsawd/ip2e/archive/master.zip
-      - Unzip the package in your system. For example in C:\Program Files\.
-      - Add the folder to PATH variable.
-      
-      Note: You must install curl.
-      * http://curl.haxx.se/download.html
-      * http://www.paehl.com/open_source/?CURL_7.45.0
+   - Install Python 3.x from https://www.python.org/.
+   - Download https://github.com/clamsawd/ip2e/archive/master.zip
+   - Unzip the package in your system. For example in C:\Program Files\.
+   - Add the folder to PATH variable.
