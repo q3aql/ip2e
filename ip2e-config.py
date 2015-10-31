@@ -5,7 +5,7 @@
 # ip2e (IP to email) - Create the configuration file.          |
 # Created by clamsawd (clamsawd@openmailbox.org)               |
 # Licensed by GPL v.3                                          |
-# Last update: 30-10-2015                                      |
+# Last update: 31-10-2015                                      |
 #                                                              |
 # Compatible with Python 3.x                                   |
 # --------------------------------------------------------------
@@ -24,7 +24,9 @@ if sys.version_info<(3,0):
 
 #Function to clear screen
 def ClearScreen():
-	if os.name == "posix":
+	if sys.platform == "cygwin":
+		print (300 * "\n")
+	elif os.name == "posix":
 		os.system("clear")
 	elif os.name == "nt":
 		os.system("cls")
