@@ -93,24 +93,27 @@ else:
 exec(open("ip2e-conf.py").read())
 
 #Import native OS color scheme
-def GreenColor():
-	if os.name == "posix":
-		GreenColor = (chr(27)+"[1;32m")
-		print (GreenColor+"", end="")
-	elif os.name == "nt":
-		os.system("color 2")
-def RedColor():
-	if os.name == "posix":
-		RedColor = (chr(27)+"[1;31m")
-		print (RedColor+"", end="")
-	elif os.name == "nt":
-		os.system("color 4")
-def OrangeColor():
-	if os.name == "posix":
-		OrangeColor = (chr(27)+"[1;33m")
-		print (OrangeColor+"", end="")
-	elif os.name == "nt":
-		os.system("color 6")
+try:
+	def GreenColor():
+		if os.name == "posix":
+			GreenColor = (chr(27)+"[1;32m")
+			print (GreenColor+"", end="")
+		elif os.name == "nt":
+			os.system("color 2")
+	def RedColor():
+		if os.name == "posix":
+			RedColor = (chr(27)+"[1;31m")
+			print (RedColor+"", end="")
+		elif os.name == "nt":
+			os.system("color 4")
+	def OrangeColor():
+		if os.name == "posix":
+			OrangeColor = (chr(27)+"[1;33m")
+			print (OrangeColor+"", end="")
+		elif os.name == "nt":
+			os.system("color 6")
+except:
+	print ("Error importing native color scheme")
 
 #Check if exists a previous log.file.
 if os.path.isfile("ip2e.log"):
