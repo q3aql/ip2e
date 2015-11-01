@@ -80,3 +80,28 @@ print ("")
 readfile=open('ip2e-conf.py', 'r')
 print(readfile.read())
 readfile.close()
+
+#Test connection with your configuration
+print ("")
+TestConnection=input("Test connection with your configuration (y/n): ")
+if TestConnection == "y":
+	exec(open("ip2e-conf.py").read())
+	#Import smtplib
+	import smtplib
+	try:
+		server = smtplib.SMTP(SmtpFromEmail)
+		server.ehlo()
+		server.starttls()
+		server.ehlo()
+		server.login(FromEmailUser,FromEmailPass)
+		server.quit()
+		print ("")
+		print ("Test OK")
+		print ("")
+	except:
+		print ("")
+		print ("Failed to connect ("+SmtpFromEmail+")")
+		print ("")
+else:
+	print ("Exiting...")
+	exit(0)
