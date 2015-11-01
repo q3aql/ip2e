@@ -1,0 +1,23 @@
+ip2e - How to use
+=================
+
+STEPS TO USE:
+-------------
+
+  * Create a valid configuration file:
+  
+    - First, you must create the configuration file needed to run 'ip2e' correctly. 
+      To do this, run the tool called 'ip2e-config.py':
+      
+      $ ./ip2e-config.py
+
+   * Run the daemon:
+   
+    - When are configured the necessary data of the email sender & receiver, you can 
+      run the tool called 'ip2e-daemon.py':
+      
+      $ ./ip2e-daemon.py
+      
+    - When daemon is running you can see the log file running the 'ip2e-log.py' tool:
+    
+      $ ./ip2e-log.py
