@@ -5,7 +5,7 @@
 # ip2e (IP to email) - See the log file.                       |
 # Created by clamsawd (clamsawd@openmailbox.org)               |
 # Licensed by GPL v.3                                          |
-# Last update: 31-10-2015                                      |
+# Last update: 01-11-2015                                      |
 #                                                              |
 # Compatible with Python 3.x                                   |
 # --------------------------------------------------------------
@@ -48,10 +48,12 @@ if os.path.exists(".ip2e"):
 	os.chdir(".ip2e")
 
 #Check if exists 'ip2e-conf.py'
-def createip2ecf():
+if os.path.isfile("ip2e-conf.py"):
+	print ("ip2e-conf.py exists")
+else:
+	print ("ip2e-conf.py created")
 	ip2ecf=open('ip2e-conf.py','w')
 	ip2ecf.close()
-def writeip2ecf():
 	ip2ecf=open('ip2e-conf.py','a')
 	ip2ecf.write('# sample configuration file of ip2e\n')
 	ip2ecf.write('\n')
@@ -61,13 +63,6 @@ def writeip2ecf():
 	ip2ecf.write('SmtpFromEmail="smtp.email.com"\n')
 	ip2ecf.write('ToEmail="unknown@email.com"\n')
 	ip2ecf.close()
-
-if os.path.isfile("ip2e-conf.py"):
-	print ("ip2e-conf.py exists")
-else:
-	print ("ip2e-conf.py created")
-	createip2ecf()
-	writeip2ecf()
 
 #See the log file
 if os.path.isfile("ip2e.log"):

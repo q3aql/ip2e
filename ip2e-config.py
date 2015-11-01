@@ -5,7 +5,7 @@
 # ip2e (IP to email) - Create the configuration file.          |
 # Created by clamsawd (clamsawd@openmailbox.org)               |
 # Licensed by GPL v.3                                          |
-# Last update: 31-10-2015                                      |
+# Last update: 01-11-2015                                      |
 #                                                              |
 # Compatible with Python 3.x                                   |
 # --------------------------------------------------------------
@@ -47,6 +47,7 @@ if not os.path.exists(".ip2e"):
 if os.path.exists(".ip2e"):
 	os.chdir(".ip2e")
 
+#Set variables of 'ip2e-conf.py'
 ClearScreen()
 print ("")
 print ("ip2e-config v"+version+" - Create config.file")
@@ -58,23 +59,18 @@ SmtpFromEmail=input("Type the server STMP of email sender: ")
 ToEmail=input("Type the email receiver: ")
 
 #Create 'ip2e-conf.py'
-def createip2ecf():
-	ip2ecf=open('ip2e-conf.py','w')
-	ip2ecf.close()
-def writeip2ecf():
-	ip2ecf=open('ip2e-conf.py','a')
-	ip2ecf.write('# sample configuration file of ip2e\n')
-	ip2ecf.write('\n')
-	ip2ecf.write('FromEmail="'+FromEmail+'"\n')
-	ip2ecf.write('FromEmailUser="'+FromEmailUser+'"\n')
-	ip2ecf.write('FromEmailPass="'+FromEmailPass+'"\n')
-	ip2ecf.write('SmtpFromEmail="'+SmtpFromEmail+'"\n')
-	ip2ecf.write('ToEmail="'+ToEmail+'"\n')
-	ip2ecf.close()
-
 os.remove("ip2e-conf.py")
-createip2ecf()
-writeip2ecf()
+ip2ecf=open('ip2e-conf.py','w')
+ip2ecf.close()
+ip2ecf=open('ip2e-conf.py','a')
+ip2ecf.write('# sample configuration file of ip2e\n')
+ip2ecf.write('\n')
+ip2ecf.write('FromEmail="'+FromEmail+'"\n')
+ip2ecf.write('FromEmailUser="'+FromEmailUser+'"\n')
+ip2ecf.write('FromEmailPass="'+FromEmailPass+'"\n')
+ip2ecf.write('SmtpFromEmail="'+SmtpFromEmail+'"\n')
+ip2ecf.write('ToEmail="'+ToEmail+'"\n')
+ip2ecf.close()
 
 #Show the configuration
 ClearScreen()

@@ -5,7 +5,7 @@
 # ip2e (IP to email) - Run ip2e daemon.                        |
 # Created by clamsawd (clamsawd@openmailbox.org)               |
 # Licensed by GPL v.3                                          |
-# Last update: 31-10-2015                                      |
+# Last update: 01-11-2015                                      |
 #                                                              |
 # Compatible with Python 3.x                                   |
 # --------------------------------------------------------------
@@ -52,10 +52,12 @@ if os.path.exists(".ip2e"):
 	os.chdir(".ip2e")
 
 #Check if exists 'ip2e-conf.py'
-def createip2ecf():
+if os.path.isfile("ip2e-conf.py"):
+	print ("ip2e-conf.py exists")
+else:
+	print ("ip2e-conf.py created")
 	ip2ecf=open('ip2e-conf.py','w')
 	ip2ecf.close()
-def writeip2ecf():
 	ip2ecf=open('ip2e-conf.py','a')
 	ip2ecf.write('# sample configuration file of ip2e\n')
 	ip2ecf.write('\n')
@@ -66,28 +68,16 @@ def writeip2ecf():
 	ip2ecf.write('ToEmail="unknown@email.com"\n')
 	ip2ecf.close()
 
-if os.path.isfile("ip2e-conf.py"):
-	print ("ip2e-conf.py exists")
-else:
-	print ("ip2e-conf.py created")
-	createip2ecf()
-	writeip2ecf()
-
 #Check if exists 'current-ip.py'
-def createip2eIPcf():
-	ip2eIPcf=open('current-ip.py','w')
-	ip2eIPcf.close()
-def writeip2eIPcf():
-	ip2eIPcf=open('current-ip.py','a')
-	ip2eIPcf.write('CurrentIP="0.0.0.0"\n')
-	ip2eIPcf.close()
-	
 if os.path.isfile("current-ip.py"):
 	print ("current-ip.py exists")
 else:
 	print ("current-ip.py created")
-	createip2eIPcf()
-	writeip2eIPcf()
+	ip2eIPcf=open('current-ip.py','w')
+	ip2eIPcf.close()
+	ip2eIPcf=open('current-ip.py','a')
+	ip2eIPcf.write('CurrentIP="0.0.0.0"\n')
+	ip2eIPcf.close()
 
 #Import variables from ip2e-conf.py
 exec(open("ip2e-conf.py").read())
@@ -114,6 +104,7 @@ try:
 			os.system("color 6")
 except:
 	print ("Error importing native color scheme")
+	exit(1)
 
 #Check if exists a previous log.file.
 if os.path.isfile("ip2e.log"):
