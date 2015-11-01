@@ -9,7 +9,7 @@
 #                                                              |
 # Compatible with Python 3.x                                   |
 # --------------------------------------------------------------
-version="1.0"
+version="1.1"
 
 #Import python-modules
 import urllib
@@ -201,15 +201,11 @@ while PublicIP <= 2:
 				editlog.write("[ip2e-daemon] ["+CurrentTime+"] Retrying in 10 seconds...\n")
 				time.sleep(10)
 		os.remove("current-ip.py")
-		def createNewip2eIPcf():
-			ip2eIPcf=open('current-ip.py','w')
-			ip2eIPcf.close()
-		def writeNewip2eIPcf():
-			ip2eIPcf=open('current-ip.py','a')
-			ip2eIPcf.write('CurrentIP="'+NewIP+'"\n')
-			ip2eIPcf.close()
-		createNewip2eIPcf()
-		writeNewip2eIPcf()
+		ip2eIPcf=open('current-ip.py','w')
+		ip2eIPcf.close()
+		ip2eIPcf=open('current-ip.py','a')
+		ip2eIPcf.write('CurrentIP="'+NewIP+'"\n')
+		ip2eIPcf.close()
 	CurrentTime = time.strftime("%H:%M")
 	GreenColor()
 	print ("[ip2e-daemon] ["+CurrentTime+"] Next update in 10 minutes...")
