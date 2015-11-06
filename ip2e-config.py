@@ -59,7 +59,8 @@ SmtpFromEmail=input("Type the server STMP of email sender: ")
 ToEmail=input("Type the email receiver: ")
 
 #Create 'ip2e-conf.py'
-os.remove("ip2e-conf.py")
+if os.path.isfile("ip2e-conf.py"):
+	os.remove("ip2e-conf.py")
 ip2ecf=open('ip2e-conf.py','w')
 ip2ecf.close()
 ip2ecf=open('ip2e-conf.py','a')
