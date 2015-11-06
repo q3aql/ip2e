@@ -55,18 +55,13 @@ if os.path.exists(".ip2e"):
 if os.path.isfile("ip2e-conf.py"):
 	print ("ip2e-conf.py exists")
 else:
-	print ("ip2e-conf.py created")
-	ip2ecf=open('ip2e-conf.py','w')
-	ip2ecf.close()
-	ip2ecf=open('ip2e-conf.py','a')
-	ip2ecf.write('# sample configuration file of ip2e\n')
-	ip2ecf.write('\n')
-	ip2ecf.write('FromEmail="ip2e@daemon"\n')
-	ip2ecf.write('FromEmailUser="unknown"\n')
-	ip2ecf.write('FromEmailPass="password-here"\n')
-	ip2ecf.write('SmtpFromEmail="smtp.email.com"\n')
-	ip2ecf.write('ToEmail="unknown@email.com"\n')
-	ip2ecf.close()
+	ClearScreen()
+	print ("")
+	print ("The configuration file doesn't exist")
+	print ("")
+	print ("You can create it if you run 'ip2e-config.py'")
+	print ("")
+	exit(0)
 
 #Check if exists 'current-ip.py'
 if os.path.isfile("current-ip.py"):
