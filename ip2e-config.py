@@ -5,7 +5,7 @@
 # ip2e (IP to email) - Create the configuration file.          |
 # Created by clamsawd (clamsawd@openmailbox.org)               |
 # Licensed by GPL v.3                                          |
-# Last update: 06-11-2015                                      |
+# Last update: 09-11-2015                                      |
 #                                                              |
 # Compatible with Python 3.x                                   |
 # --------------------------------------------------------------
@@ -47,7 +47,7 @@ if not os.path.exists(".ip2e"):
 if os.path.exists(".ip2e"):
 	os.chdir(".ip2e")
 
-if os.path.isfile("ip2e-conf.py"):
+if os.path.isfile("ip2e.conf"):
 	ClearScreen()
 	print ("")
 	print ("ip2e-config v"+version)
@@ -62,7 +62,7 @@ if os.path.isfile("ip2e-conf.py"):
 	if OverWriteOrCheck == "o" or OverWriteOrCheck == "O":
 		print ("Create new configuration")
 	else:
-		exec(open("ip2e-conf.py").read())
+		exec(open("ip2e.conf").read())
 		#Import smtplib
 		import smtplib
 		try:
@@ -81,7 +81,7 @@ if os.path.isfile("ip2e-conf.py"):
 			print ("")
 		exit(0)
 
-#Set variables of 'ip2e-conf.py'
+#Set variables of 'ip2e.conf'
 ClearScreen()
 print ("")
 print ("ip2e-config v"+version+" - Create config.file")
@@ -92,12 +92,12 @@ FromEmailPass=input("Type the pass of email sender: ")
 SmtpFromEmail=input("Type the server STMP of email sender: ")
 ToEmail=input("Type the email receiver: ")
 
-#Create 'ip2e-conf.py'
-if os.path.isfile("ip2e-conf.py"):
-	os.remove("ip2e-conf.py")
-ip2ecf=open('ip2e-conf.py','w')
+#Create 'ip2e.conf'
+if os.path.isfile("ip2e.conf"):
+	os.remove("ip2e.conf")
+ip2ecf=open('ip2e.conf','w')
 ip2ecf.close()
-ip2ecf=open('ip2e-conf.py','a')
+ip2ecf=open('ip2e.conf','a')
 ip2ecf.write('# sample configuration file of ip2e\n')
 ip2ecf.write('\n')
 ip2ecf.write('FromEmail="'+FromEmail+'"\n')
@@ -112,7 +112,7 @@ ClearScreen()
 print ("")
 print ("ip2e-config v"+version+" - Current config.file")
 print ("")
-readfile=open('ip2e-conf.py', 'r')
+readfile=open('ip2e.conf', 'r')
 print(readfile.read())
 readfile.close()
 
@@ -123,7 +123,7 @@ if TestConnection == "n":
 	print ("Exiting...")
 	exit(0)
 else:
-	exec(open("ip2e-conf.py").read())
+	exec(open("ip2e.conf").read())
 	#Import smtplib
 	import smtplib
 	try:

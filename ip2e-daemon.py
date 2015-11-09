@@ -51,9 +51,9 @@ if not os.path.exists(".ip2e"):
 if os.path.exists(".ip2e"):
 	os.chdir(".ip2e")
 
-#Check if exists 'ip2e-conf.py'
-if os.path.isfile("ip2e-conf.py"):
-	print ("ip2e-conf.py exists")
+#Check if exists 'ip2e.conf'
+if os.path.isfile("ip2e.conf"):
+	print ("ip2e.conf exists")
 else:
 	ClearScreen()
 	print ("")
@@ -63,19 +63,19 @@ else:
 	print ("")
 	exit(0)
 
-#Check if exists 'current-ip.py'
-if os.path.isfile("current-ip.py"):
-	print ("current-ip.py exists")
+#Check if exists 'IP.log'
+if os.path.isfile("IP.log"):
+	print ("IP.log exists")
 else:
-	print ("current-ip.py created")
-	ip2eIPcf=open('current-ip.py','w')
+	print ("IP.log created")
+	ip2eIPcf=open('IP.log','w')
 	ip2eIPcf.close()
-	ip2eIPcf=open('current-ip.py','a')
-	ip2eIPcf.write('CurrentIP="0.0.0.0"\n')
+	ip2eIPcf=open('IP.log','a')
+	ip2eIPcf.write('0.0.0.0')
 	ip2eIPcf.close()
 
-#Import variables from ip2e-conf.py
-exec(open("ip2e-conf.py").read())
+#Import variables from ip2e.conf
+exec(open("ip2e.conf").read())
 
 #Import native OS color scheme
 try:
@@ -149,7 +149,10 @@ while PublicIP <= 2:
 			editlog.write("[ip2e-daemon] ["+CurrentTime+"] Error getting IP\n")
 			editlog.write("[ip2e-daemon] ["+CurrentTime+"] Retrying in 10 seconds...\n")
 			time.sleep(10)
-	exec(open("current-ip.py").read())
+	readfileIP=open('IP.log', 'r')
+	CurrentIPRaw=readfileIP.read()
+	CurrentIP=CurrentIPRaw.strip()
+	readfileIP.close()
 	if CurrentIP == NewIP:
 		CurrentTime = time.strftime("%H:%M")
 		GreenColor()
@@ -195,11 +198,11 @@ while PublicIP <= 2:
 				editlog.write(MailMessage+" ("+ToEmail+")\n")
 				editlog.write("[ip2e-daemon] ["+CurrentTime+"] Retrying in 10 seconds...\n")
 				time.sleep(10)
-		os.remove("current-ip.py")
-		ip2eIPcf=open('current-ip.py','w')
+		os.remove("IP.log")
+		ip2eIPcf=open('IP.log','w')
 		ip2eIPcf.close()
-		ip2eIPcf=open('current-ip.py','a')
-		ip2eIPcf.write('CurrentIP="'+NewIP+'"\n')
+		ip2eIPcf=open('IP.log','a')
+		ip2eIPcf.write(NewIP)
 		ip2eIPcf.close()
 	CurrentTime = time.strftime("%H:%M")
 	GreenColor()
