@@ -9,7 +9,7 @@
 #                                                              |
 # Compatible with Python 3.x                                   |
 # --------------------------------------------------------------
-version="1.1.1"
+version="1.1.2"
 
 #Import python-modules
 import os
