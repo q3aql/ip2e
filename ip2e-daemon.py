@@ -5,7 +5,7 @@
 # ip2e (IP to email) - Run ip2e daemon.                        |
 # Created by clamsawd (clamsawd@openmailbox.org)               |
 # Licensed by GPL v.3                                          |
-# Last update: 06-11-2015                                      |
+# Last update: 09-11-2015                                      |
 #                                                              |
 # Compatible with Python 3.x                                   |
 # --------------------------------------------------------------
@@ -40,9 +40,11 @@ def ClearScreen():
 #Detect system & PATH of user folder
 if os.name == "posix":
 	os.chdir(os.environ["HOME"])
+	LogFile=os.environ["HOME"]+"/.ip2e/ip2e.log"
 	print ("POSIX detected")
 elif os.name == "nt":
 	os.chdir(os.environ["USERPROFILE"])
+	LogFile=os.environ["USERPROFILE"]+"\\.ip2e\\ip2e.log"
 	print ("Windows detected")
 
 if not os.path.exists(".ip2e"):
@@ -113,10 +115,7 @@ editlog=open('ip2e.log','a')
 CurrentTime = time.strftime("%H:%M")
 GreenColor()
 print ("[ip2e-daemon] ["+CurrentTime+"] Initialized ip2e-daemon v"+version+" (Ctrl+C to stop)")
-if os.name == "posix":
-	print ("[ip2e-daemon] ["+CurrentTime+"] Log in "+os.environ["HOME"]+"/.ip2e/ip2e.log")
-elif os.name == "nt":
-	print ("[ip2e-daemon] ["+CurrentTime+"] Log in "+os.environ["USERPROFILE"]+"\.ip2e\\ip2e.log")
+print ("[ip2e-daemon] ["+CurrentTime+"] Log in "+LogFile)
 editlog.write("[ip2e-daemon] ["+CurrentTime+"] Initialized ip2e-daemon v"+version+"\n")
 OrangeColor()
 print ("[ip2e-daemon] ["+CurrentTime+"] Waiting 60 seconds...")
