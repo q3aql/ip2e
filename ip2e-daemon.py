@@ -103,7 +103,7 @@ except:
 	print ("Error importing native color scheme")
 	exit(1)
 
-#Check if exists a previous log.file.
+#Check if exists a previous log.file
 if os.path.isfile("ip2e.log"):
 	os.remove("ip2e.log")
 createlog=open('ip2e.log','w')
@@ -124,7 +124,6 @@ editlog.close()
 time.sleep(60)
 
 PublicIP = 1
-
 while PublicIP <= 2:
 	GetCurrentIP = 1
 	while GetCurrentIP <= 2:
@@ -133,6 +132,7 @@ while PublicIP <= 2:
 		print ("[ip2e-daemon] ["+CurrentTime+"] IP Updating...")
 		editlog=open('ip2e.log','a')
 		editlog.write("[ip2e-daemon] ["+CurrentTime+"] IP Updating...\n")
+		#Check & get the new IP
 		try:
 			response = urllib.request.urlopen('http://icanhazip.com')
 			#response = urllib.request.urlopen('http://ip.appspot.com/')
@@ -148,10 +148,12 @@ while PublicIP <= 2:
 			editlog.write("[ip2e-daemon] ["+CurrentTime+"] Error getting IP\n")
 			editlog.write("[ip2e-daemon] ["+CurrentTime+"] Retrying in 10 seconds...\n")
 			time.sleep(10)
+	#Read IP log file & get the current IP
 	readfileIP=open('IP.log', 'r')
 	CurrentIPRaw=readfileIP.read()
 	CurrentIP=CurrentIPRaw.strip()
 	readfileIP.close()
+	#Check if the IP has been renewed
 	if CurrentIP == NewIP:
 		CurrentTime = time.strftime("%H:%M")
 		GreenColor()
@@ -197,12 +199,14 @@ while PublicIP <= 2:
 				editlog.write(MailMessage+" ("+ToEmail+")\n")
 				editlog.write("[ip2e-daemon] ["+CurrentTime+"] Retrying in 10 seconds...\n")
 				time.sleep(10)
+		#Remove the previous IP log file & create a new.
 		os.remove("IP.log")
 		ip2eIPcf=open('IP.log','w')
 		ip2eIPcf.close()
 		ip2eIPcf=open('IP.log','a')
 		ip2eIPcf.write(NewIP)
 		ip2eIPcf.close()
+	#Wait 10 minutes until the next checking
 	CurrentTime = time.strftime("%H:%M")
 	GreenColor()
 	print ("[ip2e-daemon] ["+CurrentTime+"] Next update in 10 minutes...")
