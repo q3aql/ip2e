@@ -47,6 +47,40 @@ if not os.path.exists(".ip2e"):
 if os.path.exists(".ip2e"):
 	os.chdir(".ip2e")
 
+if os.path.isfile("ip2e-conf.py"):
+	ClearScreen()
+	print ("")
+	print ("ip2e-config v"+version)
+	print ("")
+	print ("Detected a previous configuration file")
+	print ("Do you want to overwrite or check the current configuration?")
+	print ("")
+	print ("(o) - overwrite (create new configuration)")
+	print ("(c) - check and test the current configuration")
+	print ("")
+	OverWriteOrCheck=input("[Default: check and test] Choose an option; ")
+	if OverWriteOrCheck == "o" or OverWriteOrCheck == "O":
+		print ("Create new configuration")
+	else:
+		exec(open("ip2e-conf.py").read())
+		#Import smtplib
+		import smtplib
+		try:
+			server = smtplib.SMTP(SmtpFromEmail)
+			server.ehlo()
+			server.starttls()
+			server.ehlo()
+			server.login(FromEmailUser,FromEmailPass)
+			server.quit()
+			print ("")
+			print ("Test OK")
+			print ("")
+		except:
+			print ("")
+			print ("Failed to connect ("+SmtpFromEmail+")")
+			print ("")
+		exit(0)
+
 #Set variables of 'ip2e-conf.py'
 ClearScreen()
 print ("")
@@ -84,8 +118,11 @@ readfile.close()
 
 #Test connection with your configuration
 print ("")
-TestConnection=input("Test connection with your configuration (y/n): ")
-if TestConnection == "y":
+TestConnection=input("[Default: y] Test connection with your configuration (y/n): ")
+if TestConnection == "n":
+	print ("Exiting...")
+	exit(0)
+else:
 	exec(open("ip2e-conf.py").read())
 	#Import smtplib
 	import smtplib
@@ -103,6 +140,3 @@ if TestConnection == "y":
 		print ("")
 		print ("Failed to connect ("+SmtpFromEmail+")")
 		print ("")
-else:
-	print ("Exiting...")
-	exit(0)
