@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=ip2e (config)
+GenericName=ip2e (config)
+X-GNOME-FullName=ip2e (config)
+Comment=Receive your public IP by email when it is renewed
+Exec=ip2e-config.py
+Icon=/usr/share/icons/ip2e.png
+Terminal=true
+Type=Application
+StartupNotify=true
+Categories=Network;FileTransfer;
