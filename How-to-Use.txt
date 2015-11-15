@@ -21,3 +21,10 @@ STEPS TO USE:
     - When daemon is running you can see the log file running the 'ip2e-log.py' tool:
     
       $ ./ip2e-log.py
+
+WINDOWS NOTES:
+--------------
+
+     - If you want to run ip2e-daemon.py without visible terminal, you must use the script 
+       'ip2e-daemon.vbs' located in win32\ip2e-daemon.vbs. Copy the script in the root
+       directory or at the same directory of 'ip2e-daemon.py' and double click about him. 
