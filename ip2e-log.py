@@ -20,7 +20,7 @@ if sys.version_info<(3,0):
 	print ("")
 	print ("You need python 3.x to run this program.")
 	print ("")
-	exit(1)
+	exit()
 
 #Function to clear screen
 def ClearScreen():

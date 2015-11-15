@@ -20,7 +20,7 @@ if sys.version_info<(3,0):
 	print ("")
 	print ("You need python 3.x to run this program.")
 	print ("")
-	exit(1)
+	exit()
 
 #Function to clear screen
 def ClearScreen():
@@ -75,11 +75,13 @@ if os.path.isfile("ip2e.conf"):
 			print ("")
 			print ("Test OK")
 			print ("")
+			PauseExit=input("Press ENTER to exit ")
 		except:
 			print ("")
 			print ("Failed to connect ("+SmtpFromEmail+")")
 			print ("")
-		exit(0)
+			PauseExit=input("Press ENTER to exit ")
+		exit()
 
 #Set variables of 'ip2e.conf'
 ClearScreen()
@@ -121,7 +123,7 @@ print ("")
 TestConnection=input("[Default: y] Test connection with your configuration (y/n): ")
 if TestConnection == "n":
 	print ("Exiting...")
-	exit(0)
+	exit()
 else:
 	exec(open("ip2e.conf").read())
 	#Import smtplib
@@ -136,7 +138,9 @@ else:
 		print ("")
 		print ("Test OK")
 		print ("")
+		PauseExit=input("Press ENTER to exit ")
 	except:
 		print ("")
 		print ("Failed to connect ("+SmtpFromEmail+")")
 		print ("")
+		PauseExit=input("Press ENTER to exit ")

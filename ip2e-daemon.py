@@ -24,7 +24,7 @@ if sys.version_info<(3,0):
 	print ("")
 	print ("You need python 3.x to run this program.")
 	print ("")
-	exit(1)
+	exit()
 
 #Function to clear screen
 def ClearScreen():
@@ -63,7 +63,8 @@ else:
 	print ("")
 	print ("You can create it if you run 'ip2e-config.py'")
 	print ("")
-	exit(0)
+	PauseExit=input("Press ENTER to exit ")
+	exit()
 
 #Check if exists 'IP.log'
 if os.path.isfile("IP.log"):
@@ -101,7 +102,7 @@ try:
 			os.system("color 6")
 except:
 	print ("Error importing native color scheme")
-	exit(1)
+	exit()
 
 #Check if exists a previous log.file
 if os.path.isfile("ip2e.log"):
