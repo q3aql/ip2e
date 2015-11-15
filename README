@@ -11,14 +11,25 @@ TOOLS
 HOW TO INSTALL
 --------------
 
- * Unix systems (GNU/Linux,*BSD, Mac OS X, etc..)
- ================================================
+ * Unix systems (GNU/Linux,*BSD, etc..)
+ ======================================
 
    - Open the terminal and type the following comands:
    
      $ git clone https://github.com/clamsawd/ip2e.git
      $ cd ip2e
      # make
+     
+   Note: You must install git & python3 previously.
+   
+ * Mac OS X
+ ==========
+ 
+    - Open the terminal and type the following comands:
+   
+     $ git clone https://github.com/clamsawd/ip2e.git
+     $ cd ip2e
+     # make -f makefile.osx
      
    Note: You must install git & python3 previously.
      
