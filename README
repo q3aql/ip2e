@@ -40,6 +40,7 @@ HOW TO INSTALL
    - Download https://github.com/clamsawd/ip2e/archive/master.zip
    - Unzip the package in your system. For example in C:\Program Files\.
    - Add the folder to PATH variable.
+   - Double click on 'install.cmd'.
 
 HOW TO USE
 -----------
