@@ -136,32 +136,12 @@ def LockProcess():
 	createLock.write(str(random.randrange(135790)))
 	createLock.close()
 
-#Function to sleep 60 seconds.
-def TimeSleep60():
+#Function to sleep 'N' seconds.
+def TimeSleep(N):
 	Time=1
-	while Time < 60:
+	while Time < N:
 		createLock=open('ip2e.lock','w')
 		createLock.write(str(random.randrange(135790)))
-		createLock.close()
-		time.sleep(1)
-		Time=Time + 1
-
-#Function to sleep 10 seconds.
-def TimeSleep10():
-	Time=1
-	while Time < 10:
-		createLock=open('ip2e.lock','w')
-		createLock.write(str(random.randrange(135790)))
-		createLock.close()
-		time.sleep(1)
-		Time=Time + 1
-
-#Function to sleep 10 minutes.
-def TimeSleep600():
-	Time=1
-	while Time < 600:
-		createLock=open('ip2e.lock','w')
-		createLock.write(str(random.randrange(13579)))
 		createLock.close()
 		time.sleep(1)
 		Time=Time + 1		
@@ -184,7 +164,7 @@ OrangeColor()
 print ("[ip2e-daemon] ["+CurrentTime+"] Waiting 60 seconds...")
 editlog.write("[ip2e-daemon] ["+CurrentTime+"] Waiting 60 seconds...\n")
 editlog.close()
-TimeSleep60()
+TimeSleep(60)
 
 PublicIP = 1
 while PublicIP <= 2:
@@ -213,7 +193,7 @@ while PublicIP <= 2:
 			print ("[ip2e-daemon] ["+CurrentTime+"] Retrying in 10 seconds...")
 			editlog.write("[ip2e-daemon] ["+CurrentTime+"] Error getting IP\n")
 			editlog.write("[ip2e-daemon] ["+CurrentTime+"] Retrying in 10 seconds...\n")
-			TimeSleep10()
+			TimeSleep(10)
 	#Read IP log file & get the current IP
 	readfileIP=open('IP.log', 'r')
 	CurrentIPRaw=readfileIP.read()
@@ -270,7 +250,7 @@ while PublicIP <= 2:
 				print ("[ip2e-daemon] ["+CurrentTime+"] Retrying in 10 seconds...")
 				editlog.write(MailMessage+" ("+ToEmail+")\n")
 				editlog.write("[ip2e-daemon] ["+CurrentTime+"] Retrying in 10 seconds...\n")
-				TimeSleep10()
+				TimeSleep(10)
 		#Remove the previous IP log file & create a new.
 		ip2eIPcf=open('IP.log','w')
 		ip2eIPcf.write(NewIP)
@@ -282,4 +262,4 @@ while PublicIP <= 2:
 	print ("[ip2e-daemon] ["+CurrentTime+"] Next update in 10 minutes...")
 	editlog.write("[ip2e-daemon] ["+CurrentTime+"] Next update in 10 minutes...\n")
 	editlog.close()
-	TimeSleep600()
+	TimeSleep(600)
