@@ -18,6 +18,7 @@ import os
 import sys
 import time
 import smtplib
+import random
 
 #Check if your system use Python 3.x
 if sys.version_info<(3,0):
@@ -41,10 +42,12 @@ def ClearScreen():
 if os.name == "posix":
 	os.chdir(os.environ["HOME"])
 	LogFile=os.environ["HOME"]+"/.ip2e/ip2e.log"
+	LockFile=os.environ["HOME"]+"/.ip2e/ip2e.lock"
 	print ("POSIX detected")
 elif os.name == "nt":
 	os.chdir(os.environ["USERPROFILE"])
 	LogFile=os.environ["USERPROFILE"]+"\\.ip2e\\ip2e.log"
+	LockFile=os.environ["USERPROFILE"]+"\\.ip2e\\ip2e.lock"
 	print ("Windows detected")
 
 if not os.path.exists(".ip2e"):
@@ -104,14 +107,73 @@ except:
 	print ("Error importing native color scheme")
 	exit()
 
+#Check if ip2e-daemon is running.
+if os.path.isfile("ip2e.lock"):
+	readLock=open('ip2e.lock', 'r')
+	LockN=readLock.read()
+	readLock.close()
+	ClearScreen()
+	print ("Checking "+LockFile+"...")
+	time.sleep(4)
+	readLock2=open('ip2e.lock', 'r')
+	LockN2=readLock2.read()
+	readLock2.close()
+	if LockN != LockN2:
+		ClearScreen()
+		print ("")
+		print ("ip2e-daemon is already running.")
+		print ("")
+		PauseExit=input("Press ENTER to exit ")
+		exit()
+if not os.path.isfile("ip2e.lock"):
+	createLock=open('ip2e.lock','w')
+	createLock.write(str(random.randrange(135790)))
+	createLock.close()
+
+#Function to lock process.
+def LockProcess():
+	createLock=open('ip2e.lock','w')
+	createLock.write(str(random.randrange(135790)))
+	createLock.close()
+
+#Function to sleep 60 seconds.
+def TimeSleep60():
+	Time=1
+	while Time < 60:
+		createLock=open('ip2e.lock','w')
+		createLock.write(str(random.randrange(135790)))
+		createLock.close()
+		time.sleep(1)
+		Time=Time + 1
+
+#Function to sleep 10 seconds.
+def TimeSleep10():
+	Time=1
+	while Time < 10:
+		createLock=open('ip2e.lock','w')
+		createLock.write(str(random.randrange(135790)))
+		createLock.close()
+		time.sleep(1)
+		Time=Time + 1
+
+#Function to sleep 10 minutes.
+def TimeSleep600():
+	Time=1
+	while Time < 600:
+		createLock=open('ip2e.lock','w')
+		createLock.write(str(random.randrange(13579)))
+		createLock.close()
+		time.sleep(1)
+		Time=Time + 1		
+
 #Check if exists a previous log.file
 if os.path.isfile("ip2e.log"):
-	os.remove("ip2e.log")
-createlog=open('ip2e.log','w')
-createlog.close()
+	createlog=open('ip2e.log','w')
+	createlog.close()
 
 #Run ip2e daemon
 ClearScreen()
+LockProcess()
 editlog=open('ip2e.log','a')
 CurrentTime = time.strftime("%H:%M")
 GreenColor()
@@ -122,7 +184,7 @@ OrangeColor()
 print ("[ip2e-daemon] ["+CurrentTime+"] Waiting 60 seconds...")
 editlog.write("[ip2e-daemon] ["+CurrentTime+"] Waiting 60 seconds...\n")
 editlog.close()
-time.sleep(60)
+TimeSleep60()
 
 PublicIP = 1
 while PublicIP <= 2:
@@ -130,11 +192,13 @@ while PublicIP <= 2:
 	while GetCurrentIP <= 2:
 		CurrentTime = time.strftime("%H:%M")
 		OrangeColor()
+		LockProcess()
 		print ("[ip2e-daemon] ["+CurrentTime+"] IP Updating...")
 		editlog=open('ip2e.log','a')
 		editlog.write("[ip2e-daemon] ["+CurrentTime+"] IP Updating...\n")
 		#Check & get the new IP
 		try:
+			LockProcess()
 			response = urllib.request.urlopen('http://icanhazip.com')
 			#response = urllib.request.urlopen('http://ip.appspot.com/')
 			#response = urllib.request.urlopen('http://ident.me')
@@ -144,29 +208,34 @@ while PublicIP <= 2:
 		except:
 			CurrentTime = time.strftime("%H:%M")
 			RedColor()
+			LockProcess()
 			print ("[ip2e-daemon] ["+CurrentTime+"] Error getting IP")
 			print ("[ip2e-daemon] ["+CurrentTime+"] Retrying in 10 seconds...")
 			editlog.write("[ip2e-daemon] ["+CurrentTime+"] Error getting IP\n")
 			editlog.write("[ip2e-daemon] ["+CurrentTime+"] Retrying in 10 seconds...\n")
-			time.sleep(10)
+			TimeSleep10()
 	#Read IP log file & get the current IP
 	readfileIP=open('IP.log', 'r')
 	CurrentIPRaw=readfileIP.read()
 	CurrentIP=CurrentIPRaw.strip()
 	readfileIP.close()
+	LockProcess()
 	#Check if the IP has been renewed
 	if CurrentIP == NewIP:
 		CurrentTime = time.strftime("%H:%M")
 		GreenColor()
+		LockProcess()
 		print ("[ip2e-daemon] ["+CurrentTime+"] IP has not changed")
 		editlog.write("[ip2e-daemon] ["+CurrentTime+"] IP has not changed\n")
 	else:
 		CurrentTime = time.strftime("%H:%M")
 		GreenColor()
+		LockProcess()
 		print ("[ip2e-daemon] ["+CurrentTime+"] New IP - From "+CurrentIP+" to "+NewIP)
 		editlog.write("[ip2e-daemon] ["+CurrentTime+"] New IP - From "+CurrentIP+" to "+NewIP+"\n")
 		SendEmailOK = 1
 		while SendEmailOK <= 2:
+			LockProcess()
 			CurrentTime = time.strftime("%H:%M")
 			#Sending email using smtplib
 			SmtpSubject = "[ip2e-daemon] ["+CurrentTime+"] IP has changed"
@@ -184,12 +253,14 @@ while PublicIP <= 2:
 				CurrentTime = time.strftime("%H:%M")
 				MailMessage="[ip2e-daemon] ["+CurrentTime+"] Email was sent successfully"
 				GreenColor()
+				LockProcess()
 				print (MailMessage+" ("+ToEmail+")")
 				editlog.write(MailMessage+" ("+ToEmail+")\n")
 				SendEmailOK += 2
 			except:
 				CurrentTime = time.strftime("%H:%M")
 				RedColor()
+				LockProcess()
 				print ("[ip2e-daemon] ["+CurrentTime+"] Failed to connect ("+SmtpFromEmail+")")
 				print ("[ip2e-daemon] ["+CurrentTime+"] Check your settings or your connection")
 				editlog.write("[ip2e-daemon] ["+CurrentTime+"] Failed to connect ("+SmtpFromEmail+")\n")
@@ -199,18 +270,16 @@ while PublicIP <= 2:
 				print ("[ip2e-daemon] ["+CurrentTime+"] Retrying in 10 seconds...")
 				editlog.write(MailMessage+" ("+ToEmail+")\n")
 				editlog.write("[ip2e-daemon] ["+CurrentTime+"] Retrying in 10 seconds...\n")
-				time.sleep(10)
+				TimeSleep10()
 		#Remove the previous IP log file & create a new.
-		os.remove("IP.log")
 		ip2eIPcf=open('IP.log','w')
-		ip2eIPcf.close()
-		ip2eIPcf=open('IP.log','a')
 		ip2eIPcf.write(NewIP)
 		ip2eIPcf.close()
 	#Wait 10 minutes until the next checking
 	CurrentTime = time.strftime("%H:%M")
 	GreenColor()
+	LockProcess()
 	print ("[ip2e-daemon] ["+CurrentTime+"] Next update in 10 minutes...")
 	editlog.write("[ip2e-daemon] ["+CurrentTime+"] Next update in 10 minutes...\n")
 	editlog.close()
-	time.sleep(600)
+	TimeSleep600()
