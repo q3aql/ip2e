@@ -5,11 +5,11 @@
 # ip2e (IP to email) - Run ip2e daemon.                        |
 # Created by clamsawd (clamsawd@openmailbox.org)               |
 # Licensed by GPL v.3                                          |
-# Last update: 15-11-2015                                      |
+# Last update: 22-11-2015                                      |
 #                                                              |
 # Compatible with Python 3.x                                   |
 # --------------------------------------------------------------
-version="1.2"
+version="1.3"
 
 #Import python-modules
 import urllib
