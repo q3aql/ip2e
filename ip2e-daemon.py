@@ -5,7 +5,7 @@
 # ip2e (IP to email) - Run ip2e daemon.                        |
 # Created by clamsawd (clamsawd@openmailbox.org)               |
 # Licensed by GPL v.3                                          |
-# Last update: 22-11-2015                                      |
+# Last update: 01-12-2015                                      |
 #                                                              |
 # Compatible with Python 3.x                                   |
 # --------------------------------------------------------------
@@ -62,11 +62,11 @@ if os.path.isfile("ip2e.conf"):
 else:
 	ClearScreen()
 	print ("")
-	print ("The configuration file doesn't exist")
+	print ("* The configuration file doesn't exist")
 	print ("")
-	print ("You can create it if you run 'ip2e-config.py'")
+	print ("* You can create it if you run 'ip2e-config.py'")
 	print ("")
-	PauseExit=input("Press ENTER to exit ")
+	PauseExit=input("+ Press ENTER to exit ")
 	exit()
 
 #Check if exists 'IP.log'
@@ -104,7 +104,10 @@ try:
 		elif os.name == "nt":
 			os.system("color 6")
 except:
-	print ("Error importing native color scheme")
+	print ("")
+	print ("* Error importing native color scheme")
+	print ("")
+	PauseExit=input("+ Press ENTER to exit ")
 	exit()
 
 #Check if ip2e-daemon is running.
@@ -121,9 +124,9 @@ if os.path.isfile("ip2e.lock"):
 	if LockN != LockN2:
 		ClearScreen()
 		print ("")
-		print ("ip2e-daemon is already running.")
+		print ("* ip2e-daemon is already running.")
 		print ("")
-		PauseExit=input("Press ENTER to exit ")
+		PauseExit=input("+ Press ENTER to exit ")
 		exit()
 if not os.path.isfile("ip2e.lock"):
 	createLock=open('ip2e.lock','w')

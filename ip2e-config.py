@@ -5,7 +5,7 @@
 # ip2e (IP to email) - Create the configuration file.          |
 # Created by clamsawd (clamsawd@openmailbox.org)               |
 # Licensed by GPL v.3                                          |
-# Last update: 22-11-2015                                      |
+# Last update: 01-12-2015                                      |
 #                                                              |
 # Compatible with Python 3.x                                   |
 # --------------------------------------------------------------
@@ -50,15 +50,15 @@ if os.path.exists(".ip2e"):
 if os.path.isfile("ip2e.conf"):
 	ClearScreen()
 	print ("")
-	print ("ip2e-config v"+version)
+	print ("** ip2e-config v"+version+" **")
 	print ("")
-	print ("Detected a previous configuration file")
-	print ("Do you want to overwrite or check the current configuration?")
+	print (" - Detected a previous configuration file.")
+	print (" - Do you want to overwrite or check the current configuration?")
 	print ("")
-	print ("(o) - overwrite (create new configuration)")
-	print ("(c) - check and test the current configuration")
+	print (" * (o) - overwrite (create new configuration)")
+	print (" * (c) - check and test the current configuration")
 	print ("")
-	OverWriteOrCheck=input("[Default: check and test] Choose an option; ")
+	OverWriteOrCheck=input("- [Default: check and test] Choose an option; ")
 	if OverWriteOrCheck == "o" or OverWriteOrCheck == "O":
 		print ("Create new configuration")
 	else:
@@ -73,26 +73,26 @@ if os.path.isfile("ip2e.conf"):
 			server.login(FromEmailUser,FromEmailPass)
 			server.quit()
 			print ("")
-			print ("Test OK")
+			print ("* Test OK")
 			print ("")
-			PauseExit=input("Press ENTER to exit ")
+			PauseExit=input("+ Press ENTER to exit ")
 		except:
 			print ("")
-			print ("Failed to connect ("+SmtpFromEmail+")")
+			print ("* Failed to connect ("+SmtpFromEmail+")")
 			print ("")
-			PauseExit=input("Press ENTER to exit ")
+			PauseExit=input("+ Press ENTER to exit ")
 		exit()
 
 #Set variables of 'ip2e.conf'
 ClearScreen()
 print ("")
-print ("ip2e-config v"+version+" - Create config.file")
+print ("** ip2e-config v"+version+" - Create config.file **")
 print ("")
-FromEmail=input("Type the email sender: ")
-FromEmailUser=input("Type the user of email sender: ")
-FromEmailPass=input("Type the pass of email sender: ")
-SmtpFromEmail=input("Type the server STMP of email sender: ")
-ToEmail=input("Type the email receiver: ")
+FromEmail=input("- Type the email sender: ")
+FromEmailUser=input("- Type the user of email sender: ")
+FromEmailPass=input("- Type the pass of email sender: ")
+SmtpFromEmail=input("- Type the server STMP of email sender: ")
+ToEmail=input("- Type the email receiver: ")
 
 #Create 'ip2e.conf'
 if os.path.isfile("ip2e.conf"):
@@ -112,7 +112,7 @@ ip2ecf.close()
 #Show the configuration
 ClearScreen()
 print ("")
-print ("ip2e-config v"+version+" - Current config.file")
+print ("** ip2e-config v"+version+" - Current config.file **")
 print ("")
 readfile=open('ip2e.conf', 'r')
 print(readfile.read())
@@ -120,7 +120,7 @@ readfile.close()
 
 #Test connection with your configuration
 print ("")
-TestConnection=input("[Default: y] Test connection with your configuration (y/n): ")
+TestConnection=input("- [Default: y] Test connection with your configuration (y/n): ")
 if TestConnection == "n":
 	print ("Exiting...")
 	exit()
@@ -136,11 +136,11 @@ else:
 		server.login(FromEmailUser,FromEmailPass)
 		server.quit()
 		print ("")
-		print ("Test OK")
+		print ("* Test OK")
 		print ("")
-		PauseExit=input("Press ENTER to exit ")
+		PauseExit=input("+ Press ENTER to exit ")
 	except:
 		print ("")
-		print ("Failed to connect ("+SmtpFromEmail+")")
+		print ("* Failed to connect ("+SmtpFromEmail+")")
 		print ("")
-		PauseExit=input("Press ENTER to exit ")
+		PauseExit=input("+ Press ENTER to exit ")

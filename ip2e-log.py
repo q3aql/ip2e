@@ -5,7 +5,7 @@
 # ip2e (IP to email) - See the log file.                       |
 # Created by clamsawd (clamsawd@openmailbox.org)               |
 # Licensed by GPL v.3                                          |
-# Last update: 22-11-2015                                      |
+# Last update: 01-12-2015                                      |
 #                                                              |
 # Compatible with Python 3.x                                   |
 # --------------------------------------------------------------
@@ -57,5 +57,5 @@ if os.path.isfile("ip2e.log"):
 else:
 	ClearScreen()
 	print ("")
-	print ("ip2e.log doesn't exist.")
+	print ("* ip2e.log doesn't exist.")
 	print ("")
