@@ -9,7 +9,7 @@
 #                                                              |
 # Compatible with Python 3.x                                   |
 # --------------------------------------------------------------
-version="1.3"
+version="1.3.1"
 
 #Import python-modules
 import urllib
