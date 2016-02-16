@@ -5,7 +5,7 @@
 # ip2e (IP to email) - Run ip2e daemon.                        |
 # Created by clamsawd (clamsawd@openmailbox.org)               |
 # Licensed by GPL v.3                                          |
-# Last update: 01-12-2015                                      |
+# Last update: 16-02-2016                                      |
 #                                                              |
 # Compatible with Python 3.x                                   |
 # --------------------------------------------------------------
@@ -103,6 +103,12 @@ try:
 			print (OrangeColor+"", end="")
 		elif os.name == "nt":
 			os.system("color 6")
+	def EndColor():
+		if os.name == "posix":
+			EndColor = (chr(27)+"[0m")
+			print (EndColor+"", end="")
+		elif os.name == "nt":
+			print ("", end="")		
 except:
 	print ("")
 	print ("* Error importing native color scheme")
@@ -162,9 +168,11 @@ CurrentTime = time.strftime("%H:%M")
 GreenColor()
 print ("[ip2e-daemon] ["+CurrentTime+"] Initialized ip2e-daemon v"+version+" (Ctrl+C to stop)")
 print ("[ip2e-daemon] ["+CurrentTime+"] Log in "+LogFile)
+EndColor()
 editlog.write("[ip2e-daemon] ["+CurrentTime+"] Initialized ip2e-daemon v"+version+"\n")
 OrangeColor()
 print ("[ip2e-daemon] ["+CurrentTime+"] Waiting 60 seconds...")
+EndColor()
 editlog.write("[ip2e-daemon] ["+CurrentTime+"] Waiting 60 seconds...\n")
 editlog.close()
 TimeSleep(60)
@@ -174,9 +182,10 @@ while PublicIP <= 2:
 	GetCurrentIP = 1
 	while GetCurrentIP <= 2:
 		CurrentTime = time.strftime("%H:%M")
-		OrangeColor()
 		LockProcess()
+		OrangeColor()
 		print ("[ip2e-daemon] ["+CurrentTime+"] IP Updating...")
+		EndColor()
 		editlog=open('ip2e.log','a')
 		editlog.write("[ip2e-daemon] ["+CurrentTime+"] IP Updating...\n")
 		#Check & get the new IP
@@ -190,10 +199,11 @@ while PublicIP <= 2:
 			GetCurrentIP += 2
 		except:
 			CurrentTime = time.strftime("%H:%M")
-			RedColor()
 			LockProcess()
+			RedColor()
 			print ("[ip2e-daemon] ["+CurrentTime+"] Error getting IP")
 			print ("[ip2e-daemon] ["+CurrentTime+"] Retrying in 10 seconds...")
+			EndColor()
 			editlog.write("[ip2e-daemon] ["+CurrentTime+"] Error getting IP\n")
 			editlog.write("[ip2e-daemon] ["+CurrentTime+"] Retrying in 10 seconds...\n")
 			TimeSleep(10)
@@ -206,15 +216,17 @@ while PublicIP <= 2:
 	#Check if the IP has been renewed
 	if CurrentIP == NewIP:
 		CurrentTime = time.strftime("%H:%M")
-		GreenColor()
 		LockProcess()
+		GreenColor()
 		print ("[ip2e-daemon] ["+CurrentTime+"] IP has not changed")
+		EndColor()
 		editlog.write("[ip2e-daemon] ["+CurrentTime+"] IP has not changed\n")
 	else:
 		CurrentTime = time.strftime("%H:%M")
-		GreenColor()
 		LockProcess()
+		GreenColor()
 		print ("[ip2e-daemon] ["+CurrentTime+"] New IP - From "+CurrentIP+" to "+NewIP)
+		EndColor()
 		editlog.write("[ip2e-daemon] ["+CurrentTime+"] New IP - From "+CurrentIP+" to "+NewIP+"\n")
 		SendEmailOK = 1
 		while SendEmailOK <= 2:
@@ -235,22 +247,26 @@ while PublicIP <= 2:
 				server.quit()
 				CurrentTime = time.strftime("%H:%M")
 				MailMessage="[ip2e-daemon] ["+CurrentTime+"] Email was sent successfully"
-				GreenColor()
 				LockProcess()
+				GreenColor()
 				print (MailMessage+" ("+ToEmail+")")
+				EndColor()
 				editlog.write(MailMessage+" ("+ToEmail+")\n")
 				SendEmailOK += 2
 			except:
 				CurrentTime = time.strftime("%H:%M")
-				RedColor()
 				LockProcess()
+				RedColor()
 				print ("[ip2e-daemon] ["+CurrentTime+"] Failed to connect ("+SmtpFromEmail+")")
 				print ("[ip2e-daemon] ["+CurrentTime+"] Check your settings or your connection")
+				EndColor()
 				editlog.write("[ip2e-daemon] ["+CurrentTime+"] Failed to connect ("+SmtpFromEmail+")\n")
 				editlog.write("[ip2e-daemon] ["+CurrentTime+"] Check your settings or your connection\n")
 				MailMessage="[ip2e-daemon] ["+CurrentTime+"] Failed to send email"
+				RedColor()
 				print (MailMessage+" ("+ToEmail+")")
 				print ("[ip2e-daemon] ["+CurrentTime+"] Retrying in 10 seconds...")
+				EndColor()
 				editlog.write(MailMessage+" ("+ToEmail+")\n")
 				editlog.write("[ip2e-daemon] ["+CurrentTime+"] Retrying in 10 seconds...\n")
 				TimeSleep(10)
@@ -260,9 +276,10 @@ while PublicIP <= 2:
 		ip2eIPcf.close()
 	#Wait 10 minutes until the next checking
 	CurrentTime = time.strftime("%H:%M")
-	GreenColor()
 	LockProcess()
+	GreenColor()
 	print ("[ip2e-daemon] ["+CurrentTime+"] Next update in 10 minutes...")
+	EndColor()
 	editlog.write("[ip2e-daemon] ["+CurrentTime+"] Next update in 10 minutes...\n")
 	editlog.close()
 	TimeSleep(600)
