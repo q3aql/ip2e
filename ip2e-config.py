@@ -5,7 +5,7 @@
 # ip2e (IP to email) - Create the configuration file.          |
 # Created by clamsawd (clamsawd@openmailbox.org)               |
 # Licensed by GPL v.3                                          |
-# Last update: 01-12-2015                                      |
+# Last update: 16-02-2016                                      |
 #                                                              |
 # Compatible with Python 3.x                                   |
 # --------------------------------------------------------------
@@ -34,9 +34,13 @@ def ClearScreen():
 		print ("Error: Unable clear screen")
 		
 #Detect system & PATH of user folder
-if os.name == "posix":
+if os.path.exists("/storage/sdcard0"):
+	HOMESCARD0="/storage/sdcard0/Android/data"
+	os.chdir(HOMESCARD0)
+	print ("Android (Posix) detected")
+elif os.name == "posix":
 	os.chdir(os.environ["HOME"])
-	print ("POSIX detected")
+	print ("Unix (Posix) detected")
 elif os.name == "nt":
 	os.chdir(os.environ["USERPROFILE"])
 	print ("Windows detected")

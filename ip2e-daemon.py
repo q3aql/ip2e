@@ -39,11 +39,17 @@ def ClearScreen():
 		print ("Error: Unable clear screen")
 					
 #Detect system & PATH of user folder
-if os.name == "posix":
+if os.path.exists("/storage/sdcard0"):
+	HOMESCARD0="/storage/sdcard0/Android/data"
+	os.chdir(HOMESCARD0)
+	LogFile=HOMESCARD0+"/ip2e/ip2e.log"
+	LockFile=HOMESCARD0+"/ip2e/ip2e.lock"
+	print ("Android (Posix) detected")
+elif os.name == "posix":
 	os.chdir(os.environ["HOME"])
 	LogFile=os.environ["HOME"]+"/.ip2e/ip2e.log"
 	LockFile=os.environ["HOME"]+"/.ip2e/ip2e.lock"
-	print ("POSIX detected")
+	print ("Unix (Posix) detected")
 elif os.name == "nt":
 	os.chdir(os.environ["USERPROFILE"])
 	LogFile=os.environ["USERPROFILE"]+"\\.ip2e\\ip2e.log"
