@@ -95,7 +95,7 @@ print ("")
 FromEmail=input("- Type the email sender: ")
 FromEmailUser=input("- Type the user of email sender: ")
 FromEmailPass=input("- Type the pass of email sender: ")
-SmtpFromEmail=input("- Type the server STMP of email sender: ")
+SmtpFromEmail=input("- Type the server STMP (STARTTLS) of email sender: ")
 ToEmail=input("- Type the email receiver: ")
 
 #Create 'ip2e.conf'
