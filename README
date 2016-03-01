@@ -16,7 +16,7 @@ HOW TO INSTALL
 
    - Open the terminal and type the following comands:
    
-     $ git clone https://github.com/clamsawd/ip2e.git
+     $ git clone https://github.com/q3aql/ip2e.git
      $ cd ip2e
      # make
      
@@ -25,9 +25,9 @@ HOW TO INSTALL
  * Mac OS X
  ==========
  
-    - Open the terminal and type the following comands:
+   - Open the terminal and type the following comands:
    
-     $ git clone https://github.com/clamsawd/ip2e.git
+     $ git clone https://github.com/q3aql/ip2e.git
      $ cd ip2e
      # make -f makefile.osx
      
@@ -37,7 +37,7 @@ HOW TO INSTALL
  =========
  
    - Install Python 3.x from https://www.python.org/.
-   - Download https://github.com/clamsawd/ip2e/archive/master.zip
+   - Download https://github.com/q3aql/ip2e/archive/master.zip
    - Unzip the package in your system. For example in C:\Program Files\.
    - Add the folder to PATH variable.
    - Double click on 'install.cmd'.
