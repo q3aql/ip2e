@@ -3,9 +3,9 @@
 
 # --------------------------------------------------------------
 # ip2e (IP to email) - See the log file.                       |
-# Created by clamsawd (clamsawd@openmailbox.org)               |
+# Created by q3aql (q3aql@openmailbox.org)                     |
 # Licensed by GPL v.3                                          |
-# Last update: 20-02-2016                                      |
+# Last update: 01-03-2016                                      |
 #                                                              |
 # Compatible with Python 3.x                                   |
 # --------------------------------------------------------------
