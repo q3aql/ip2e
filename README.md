@@ -45,8 +45,8 @@ _Note: You must install `git` previously._
   * **Windows:**
  
     * Install Python 3.x from https://www.python.org/.
-    * Download `ip2e` from [here](https://github.com/q3aql/ip2e/archive/master.zip)
-    * Unzip the package in your system. For example in `C:\Program Files\`
+    * Download `ip2e` from [here](https://github.com/q3aql/ip2e/archive/master.zip).
+    * Unzip the package in your system. For example in `C:\Program Files\`.
     * Double click on `Install.cmd`.
       
 ### How to use:
