@@ -23,7 +23,7 @@ _Dependence: `python3`._
     * Open the terminal and type the following comands:
     
       ```shell
-      $ git clone https://github.com/q3aql/ip2e.git`
+      $ git clone https://github.com/q3aql/ip2e.git
       $ cd ip2e
       $ sudo make install
       ````
@@ -35,7 +35,7 @@ _Note: You must install `git` previously._
     * Open the terminal and type the following comands:
     
       ```shell
-      $ git clone https://github.com/q3aql/ip2e.git`
+      $ git clone https://github.com/q3aql/ip2e.git
       $ cd ip2e
       $ sudo make -f Makefile.OSX
       ````
