@@ -1,15 +1,15 @@
-#################################################################
-# Installing ip2e                                               #
-#################################################################
+####################################################
+# Installing ip2e                                  #
+####################################################
 
 PREFIX=/usr
 
 install:
-	cp ip2e-daemon.py $(PREFIX)/bin
-	cp ip2e-config.py $(PREFIX)/bin
-	cp ip2e-log.py $(PREFIX)/bin
-	cp desktop/ip2e.desktop $(PREFIX)/share/applications
-	cp desktop/ip2e-config.desktop $(PREFIX)/share/applications
+	cp src/ip2e-daemon.py $(PREFIX)/bin
+	cp src/ip2e-config.py $(PREFIX)/bin
+	cp src/ip2e-log.py $(PREFIX)/bin
+	cp src/ip2e.desktop $(PREFIX)/share/applications
+	cp src/ip2e-config.desktop $(PREFIX)/share/applications
 	cp icon/ip2e.png $(PREFIX)/share/icons	
 	chmod +x $(PREFIX)/bin/ip2e-daemon.py
 	chmod +x $(PREFIX)/bin/ip2e-config.py
